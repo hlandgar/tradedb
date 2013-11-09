@@ -9,4 +9,19 @@
 
 # Make sure your secret_key_base is kept private
 # if you're sharing your code publicly.
-Tradedb::Application.config.secret_key_base = 'ce63c7b330a8cdd2cea22db3f4a38f5ea2830f1f9d606f02df888fcea99742323ac8a7b4ac7d3d6c7efbe5c82f389fc6b6666135d9cb9bea1d34a6e3e8bcf745'
+require 'securerandom'
+
+def secure_token
+  token_file = Rails.root.join('.secret')
+  if File.exist?(token_file)
+    # Use the existing token.
+    File.read(token_file).chomp
+  else
+    # Generate a new token and store it in token_file.
+    token = SecureRandom.hex(64)
+    File.write(token_file, token)
+    token
+  end
+end
+
+Tradedb::Application.config.secret_key_base = secure_token
