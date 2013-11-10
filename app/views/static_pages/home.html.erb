@@ -1,5 +1,12 @@
-<% provide(:title, 'Home') %>
-<h1>Trade an Edge</h1>
+<div class="center hero-unit">
+	<h1>Welcome to Trade an Edge</h1>
 
-<p> This is the home page for Tradeanedge.com
-</p>
+	<h2>
+		This is the home page for 
+		<%= link_to "Tradeanedge.com", root_path %>
+
+	</h2>
+
+	<%= link_to "Sign up now!", signup_path , class: "btn btn-large btn-primary" %>
+</div>
+
