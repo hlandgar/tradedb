@@ -27,7 +27,7 @@ describe User do
     it { should be_admin }
   end
 
-  describe "remember_token" do
+    describe "remember_token" do
     before { @user.save }
     its(:remember_token) { should_not be_blank }
   end
