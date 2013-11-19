@@ -20,6 +20,20 @@ class SecuritiesController < ApplicationController
 		end		
 	end
 
+	def edit
+		@security = current_user.securities.find(params[:id])
+  end
+
+  def update
+  	@security = current_user.securities.find(params[:id])
+    if @security.update_attributes(security_params)
+      flash[:success] = "Security updated"
+      redirect_to user_securities_path(current_user)
+    else
+      render 'edit'
+    end
+  end
+
 	private
 
 		def security_params

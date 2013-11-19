@@ -1,4 +1,4 @@
 <li>
-	<span class="security"><%= security.symbol %>  </span>
+	<span class="security"><%= link_to security.symbol, edit_user_security_path(current_user, security) %>  </span>
 	<span class="desciption"><%= security.description %></span>
 </li>

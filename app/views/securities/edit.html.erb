@@ -1,0 +1,15 @@
+<%= provide(:title, 'Edit Security') %>
+
+<h1>Update your Security</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for @security, url: user_security_path do |f| %>
+			
+			<%= render 'sec_fields', f: f %>
+					
+			<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+		<% end %>
+	</div>
+
+</div>
