@@ -1,0 +1,15 @@
+<%= provide(:title, 'Securities') %>
+
+<h1>Create a new Security</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for @security, url: user_securities_path do |f| %>
+			
+			<%= render 'sec_fields', f: f %>
+					
+			<%= f.submit "Save", class: "btn btn-large btn-primary" %>
+		<% end %>
+	</div>
+
+</div>

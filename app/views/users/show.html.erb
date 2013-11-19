@@ -8,4 +8,13 @@
 			</h1>
 		</section>
 	</aside>
+	<div class="span8">
+		<% if @user.trades.any? %>
+			<h3>Trades (<%= @user.trades.count %>)</h3>
+			<ol class="trades">
+				<%= render @trades %>
+			</ol>
+			<%= will_paginate @trades %>
+		<% end %>
+	</div>
 </div>

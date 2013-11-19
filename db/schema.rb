@@ -11,7 +11,47 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131112173402) do
+ActiveRecord::Schema.define(version: 20131117211228) do
+
+  create_table "securities", force: true do |t|
+    t.string   "symbol"
+    t.string   "security_type"
+    t.text     "description"
+    t.string   "currency"
+    t.decimal  "tick_size"
+    t.decimal  "tickval"
+    t.integer  "sort_order"
+    t.integer  "default_spread"
+    t.integer  "decimal_places"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "user_id"
+  end
+
+  add_index "securities", ["symbol"], name: "index_securities_on_symbol"
+
+  create_table "trades", force: true do |t|
+    t.integer  "user_id"
+    t.decimal  "fill"
+    t.decimal  "stop"
+    t.decimal  "targ1"
+    t.decimal  "targ2"
+    t.float    "prob1"
+    t.float    "prob2"
+    t.decimal  "pl"
+    t.string   "desc"
+    t.string   "comments"
+    t.float    "kelly"
+    t.boolean  "open"
+    t.integer  "position"
+    t.integer  "security_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "stop2"
+  end
+
+  add_index "trades", ["security_id"], name: "index_trades_on_security_id"
+  add_index "trades", ["user_id", "created_at"], name: "index_trades_on_user_id_and_created_at"
 
   create_table "users", force: true do |t|
     t.string   "name"

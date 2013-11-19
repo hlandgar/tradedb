@@ -158,6 +158,42 @@ describe "UserPages" do
     end
   end
 
+  describe "profile page" do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:t1) { FactoryGirl.create(:trade, user: user, comments: "long ES") }
+    let!(:t2) { FactoryGirl.create(:trade, user: user, comments: "long 6E") }
 
+    before { visit user_path(user) }
+
+    it { should have_content(user.name) }
+    it { should have_title( user.name) }
+
+    describe "trades" do
+      it { should have_content(t1.comments) }
+      it { should have_content(t2.comments) }
+      it { should have_content(user.trades.count) }
+    end
+  end
+
+  describe 'securities page' do
+    let(:user) { FactoryGirl.create(:user) }
+    let!(:s1) { FactoryGirl.create(:security, user: user, symbol: "ES") }
+    let!(:s2) { FactoryGirl.create(:security, user: user, symbol: "TF") }
+
+    before do
+      sign_in user
+      visit user_securities_path(user)
+    end
+
+    it { should have_content(user.name) }
+    it { should have_title(user.name) }
+
+    describe 'securities' do
+      it { should have_content(s1.symbol) }
+      it { should have_content(s2.symbol) }
+      it { should have_content(user.securities.count) }
+    end
+    
+  end
 end
 

@@ -1,0 +1,21 @@
+<%= provide(:title, @user.name) %>
+<h1>Security list for <%= @user.name %></h1>
+<div class="row">
+	<aside class="span4">
+		<section>
+			<h1>
+				<%= gravatar_for @user %>
+				<%= @user.name %>
+			</h1>
+		</section>
+	</aside>
+	<div class="span8">
+		<% if @user.securities.any? %>
+			<h3>Securities (<%= @user.securities.count %>)</h3>
+			<ol class="securities">
+				<%= render @securities %>
+			</ol>
+			<%= will_paginate @securities %>
+		<% end %>
+	</div>
+</div>

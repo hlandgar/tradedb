@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+	has_many :trades, dependent: :destroy
+	has_many :securities, dependent: :destroy
+
 	
 
 	before_save { email.downcase! }
@@ -12,6 +15,7 @@ class User < ActiveRecord::Base
 	has_secure_password
 	validates :password, length: { minimum: 6 }
 	validates :password_confirmation, presence: true;
+	
 
 	def User.new_remember_token
 		SecureRandom.urlsafe_base64

@@ -1,0 +1,28 @@
+<%= render 'shared/error_messages', object: f.object %>
+
+	<%= f.label :symbol %>
+	<%= f.text_field :symbol %>
+
+	<%= f.label :description %>
+	<%= f.text_field :description %>
+
+	<%= f.label :security_type, "Type of Security"  %>
+	<%= f.text_field :security_type %>
+
+	<%= f.label :currency, "Base Currency" %>
+	<%= f.text_field :currency %>
+
+	<%= f.label :tick_size, "Minimum Tick Size" %>
+	<%= f.text_field :tick_size %>
+
+	<%= f.label :tickval, "Value of each Tick" %>
+	<%= f.text_field :tickval %>
+
+	<%= f.label :default_spread, "Default bid/ask spread" %>
+	<%= f.text_field :default_spread %>
+
+	<%= f.label :decimal_places, "Decimal Places in quote" %>
+	<%= f.text_field :decimal_places %>
+
+	<%= f.label :sort_order, "Place in symbol dropdown list" %>
+	<%= f.text_field :sort_order %>
