@@ -3,7 +3,7 @@ class SecuritiesController < ApplicationController
 	before_action :correct_user
 
 	def index
-			@securities = current_user.securities.paginate(page: params[:page])
+		@securities = current_user.securities.paginate(page: params[:page])
 	end
 
 	def new
@@ -11,11 +11,10 @@ class SecuritiesController < ApplicationController
 	end
 
 	def create
-		@user = User.find(params[:user_id])
-		@security = @user.securities.build(security_params)
+		@security = current_user.securities.build(security_params)
 		if @security.save
 			flash[:success] = "Security Created"
-			redirect_to user_securities_path(@user)
+			redirect_to user_securities_path(current_user)
 		else			
 			render 'new'
 		end		
