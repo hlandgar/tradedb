@@ -61,11 +61,11 @@ module ApplicationHelper
 
 	def house(risk, security_id)
 		security = current_user.securities.find(security_id)
-		tick_val = security.tickval
+		tick_cost = security.tickval * security.default_spread
 		tick_size = security.tick_size
 		commiss = 5.0
 		risk_in_ticks = risk / tick_size
-		return (tick_val + commiss) / (risk_in_ticks * tick_val)
+		return (tick_cost + commiss) / (risk_in_ticks * security.tickval)
 		
 	end
 
