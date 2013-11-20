@@ -120,7 +120,7 @@ describe "UserPages" do
 	  end
 
   	it { should have_title ('All users') }
-  	it { should have_content ('All users') }
+  	it { should have_content ('user.name') }
 
   	describe "pagination" do
 

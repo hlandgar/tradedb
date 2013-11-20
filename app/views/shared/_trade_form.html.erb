@@ -1,31 +1,63 @@
 <%= form_for(@trade) do |f| %>
 	<%= render 'shared/error_messages', object: f.object %>
-	<div>
-		<%= f.label :secutity_id, "Symbol" %>
-		<%= f.select(:security_id, securities_option_list(current_user)) %>
+	<div class="form-horizontal">
+		<div class="control-group">
+			<%= f.label :secutity_id, "Symbol", class: "control-label" %>
+			<div class="controls">
+			<%= f.select(:security_id, securities_option_list(current_user),{}, class: "span2") %>
+			</div>
+		</div>
 
-		<%= f.label :fill %>
-		<%= f.text_field  :fill %>
+		<div class="control-group">
+			<%= f.label :fill, class: "control-label" %>
+			<div class="controls">
+				<%= f.text_field  :fill , class: "input-small"%>
+			</div>
+		</div>
 
-		<%= f.label :stop %>
-		<%= f.text_field :stop %>
+		<div class="control-group">
+			<%= f.label :stop, class: "control-label" %>
+			<div class="controls">
+				<%= f.text_field :stop, class: "input-small" %>
+			</div>
+		</div>
 
-		<%= f.label :targ1, "1st Target" %>
-		<%= f.text_field :targ1 %>
+		<div class="control-group">
+			<%= f.label :targ1, "1st Target", class: "control-label" %>
+			<div class="controls">
+				<%= f.text_field :targ1, class: "input-small"  %>
+			</div>
+		</div>
 
-		<%= f.label :prob1, "Prob of reaching 1st Target" %>
-		<%= f.text_field :prob1 %>
+		<div class="control-group">
+			<%= f.label :prob1, "Prob of reaching 1st Target", class: "control-label" %>
+			<div class="controls">
+				<%= f.text_field :prob1, class: "input-small" %>
+			</div>
+		</div>
 
-		<%= f.label :targ2, "2nd Target" %>
-		<%= f.text_field :targ2 %>
+		<div class="control-group">
+			<%= f.label :targ2, "2nd Target", class: "control-label" %>
+			<div class="controls">
+				<%= f.text_field :targ2, class: "input-small" %>
+			</div>
+		</div>
 
-		<%= f.label :prob2, "Prob of reaching 2nd Target" %>
-		<%= f.text_field :prob2 %>
+		<div class="control-group">
+			<%= f.label :prob2, "Prob of reaching 2nd Target", class: "control-label" %>
+			<div class="controls">
+				<%= f.text_field :prob2, class: "input-small" %>
+			</div>
+		</div>
 
-		<%= f.label :stop2, "trailing stop after Target 1" %>
-		<%= f.text_field :stop2 %>
+		<div class="control-group">
+			<%= f.label :stop2, "trailing stop after Target 1 reached", class: "control-label" %>
+			<div class="controls">
+				<%= f.text_field :stop2, class: "input-small" %>
+			</div>
+		</div>		
 
-		<table class="table">
+		<table class="table table-bordered">
 			<thead>
 				<tr>
 					<td>R/R</td>
@@ -36,15 +68,19 @@
 				</tr>
 			</thead>
 			<tbody>
-				<td><%= @rr %></td>
-				<td><%= number_to_percentage(@edge) %></td>
-				<td><%= number_to_percentage(@kelly) %></td>
-				<td><%= number_to_percentage(@house) %></td>
-				<td><%= @alloc %></td>
+				<tr>
+					<td><%= @rr %></td>
+					<td><%= number_to_percentage(@edge) %></td>
+					<td><%= number_to_percentage(@kelly) %></td>
+					<td><%= number_to_percentage(@house) %></td>
+					<td><%= @alloc %></td>
+				</tr>
 			</tbody>
 		</table>
 
 	</div>
-	<%= f.submit "Calculate", class: "btn btn-large btn-primary" %>
-	<%= f.submit "Post", class: "btn btn-large btn-primary" %>
+	<div class="button-group">
+		<%= f.submit "Calculate", class: "btn btn-large btn-primary" %>
+		<%= f.submit "Post", class: "btn btn-large" %>
+	</div>
 <% end %>
