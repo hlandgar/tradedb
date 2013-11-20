@@ -4,32 +4,36 @@ class TradesController < ApplicationController
 
 	def create
 		@trade = current_user.trades.build(trade_params)
+
 		if params[:commit] == 'Calculate' 
-			security_id = @trade.security_id
-			fill = @trade.fill ||=0.0
-			stop = @trade.stop ||=0.0
-			targ1 = @trade.targ1 ||=0.0
-			prob1 = @trade.prob1 ||=0.0
-			prob2 = @trade.prob2 ||= 0.0
-			targ2 = @trade.targ2 ||= 0.0
-			stop2 = @trade.stop2 ||= 0.0
+			if @trade.valid?
+
+				security_id = @trade.security_id
+				fill = @trade.fill 
+				stop = @trade.stop 
+				targ1 = @trade.targ1 
+				prob1 = @trade.prob1 
+				prob2 = @trade.prob2 ||= 0.0
+				targ2 = @trade.targ2 ||= 0.0
+				stop2 = @trade.stop2 ||= 0.0
 
 
-			risk = (fill - stop).abs
-			reward = (targ1 - fill).abs
-			@house = house(risk, security_id)
+				risk = (fill - stop).abs
+				reward = (targ1 - fill).abs
+				@house = house(risk, security_id)
 
 
-			(@kelly, @edge) = kelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2)
-			@alloc = get_alloc(@kelly, 5000, security_id, risk).round(2)
+				(@kelly, @edge) = kelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2)
+				@alloc = get_alloc(@kelly, 5000, security_id, risk).round(2)
 
-			@alloc = "no trade" if @alloc < 1.0
+				@alloc = "no trade" if @alloc < 1.0
 
 
-			@kelly *= 100
-			@edge *= 100
-			@house *=100
-			@rr = (reward/risk).round(1)
+				@kelly *= 100
+				@edge *= 100
+				@house *=100
+				@rr = (reward/risk).round(1)
+			end
 
 			render 'static_pages/home'
 
