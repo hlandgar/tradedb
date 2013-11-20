@@ -5,6 +5,7 @@ Tradedb::Application.routes.draw do
   end
 
   resources :sessions, only: [:new, :create, :destroy]
+  resources :trades, only: [:create, :destroy]
   
   root 'static_pages#home'
 

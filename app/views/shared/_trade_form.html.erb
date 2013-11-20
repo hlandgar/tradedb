@@ -1,0 +1,50 @@
+<%= form_for(@trade) do |f| %>
+	<%= render 'shared/error_messages', object: f.object %>
+	<div>
+		<%= f.label :secutity_id, "Symbol" %>
+		<%= f.select(:security_id, securities_option_list(current_user)) %>
+
+		<%= f.label :fill %>
+		<%= f.text_field  :fill %>
+
+		<%= f.label :stop %>
+		<%= f.text_field :stop %>
+
+		<%= f.label :targ1, "1st Target" %>
+		<%= f.text_field :targ1 %>
+
+		<%= f.label :prob1, "Prob of reaching 1st Target" %>
+		<%= f.text_field :prob1 %>
+
+		<%= f.label :targ2, "2nd Target" %>
+		<%= f.text_field :targ2 %>
+
+		<%= f.label :prob2, "Prob of reaching 2nd Target" %>
+		<%= f.text_field :prob2 %>
+
+		<%= f.label :stop2, "trailing stop after Target 1" %>
+		<%= f.text_field :stop2 %>
+
+		<table class="table">
+			<thead>
+				<tr>
+					<td>R/R</td>
+					<td>Egde</td>
+					<td>Kelly</td>
+					<td>House</td>
+					<td>Allocation</td>
+				</tr>
+			</thead>
+			<tbody>
+				<td><%= @rr %></td>
+				<td><%= number_to_percentage(@edge) %></td>
+				<td><%= number_to_percentage(@kelly) %></td>
+				<td><%= number_to_percentage(@house) %></td>
+				<td><%= @alloc %></td>
+			</tbody>
+		</table>
+
+	</div>
+	<%= f.submit "Calculate", class: "btn btn-large btn-primary" %>
+	<%= f.submit "Post", class: "btn btn-large btn-primary" %>
+<% end %>

@@ -88,6 +88,19 @@ describe "Authentication" do
 					it { should have_title('Sign in') }
 				end
 			end
+
+			describe 'in the trades controller' do
+				
+				describe 'submitting to the create action' do
+					before { post trades_path }
+					specify { expect(response).to redirect_to(signin_path) }
+				end
+
+				describe 'submitting to the destroy action' do
+					before { delete trade_path(FactoryGirl.create(:trade)) }
+					specify { expect(response).to redirect_to(signin_path) }
+				end
+			end
 		end
 		describe "as wrong user" do
 			let(:user) { FactoryGirl.create(:user) }

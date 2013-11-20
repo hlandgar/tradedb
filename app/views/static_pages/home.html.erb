@@ -1,12 +1,25 @@
-<div class="center hero-unit">
-	<h1>Welcome to Trade an Edge</h1>
+<% if signed_in? %>
+	<div class="row">
+		<aside class="span6">
+			<section>
+				<%= render 'shared/user_info' %>
+			</section>
+			<section>
+				<%= render 'shared/trade_form' %>
+			</section>
+		</aside>
+	</div>
+<% else %>
+	<div class="center hero-unit">
+		<h1>Welcome to Trade an Edge</h1>
 
-	<h2>
-		This is the home page for 
-		<%= link_to "Tradeanedge.com", root_path %>
+		<h2>
+			This is the home page for 
+			<%= link_to "Tradeanedge.com", root_path %>
 
-	</h2>
+		</h2>
 
-	<%= link_to "Sign up now!", signup_path , class: "btn btn-large btn-primary" %>
-</div>
+		<%= link_to "Sign up now!", signup_path , class: "btn btn-large btn-primary" %>
+	</div>
+<% end %>
 
