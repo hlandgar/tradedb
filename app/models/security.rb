@@ -11,6 +11,6 @@ class Security < ActiveRecord::Base
 																														greater_than: 0,
 																														less_than: 11 }
 	validates :decimal_places, presence: true, numericality: { integer: true,
-																														 greater_than: 0,
+																														 greater_than_or_equal: 0,
 																														 less_than: 8 }
 end
