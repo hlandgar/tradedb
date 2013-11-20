@@ -6,10 +6,10 @@ class TradesController < ApplicationController
 		@trade = current_user.trades.build(trade_params)
 		if params[:commit] == 'Calculate' 
 			security_id = @trade.security_id
-			fill = @trade.fill
-			stop = @trade.stop
-			targ1 = @trade.targ1
-			prob1 = @trade.prob1
+			fill = @trade.fill ||=0.0
+			stop = @trade.stop ||=0.0
+			targ1 = @trade.targ1 ||=0.0
+			prob1 = @trade.prob1 ||=0.0
 			prob2 = @trade.prob2 ||= 0.0
 			targ2 = @trade.targ2 ||= 0.0
 			stop2 = @trade.stop2 ||= 0.0
@@ -24,6 +24,7 @@ class TradesController < ApplicationController
 			@alloc = get_alloc(@kelly, 5000, security_id, risk).round(2)
 
 			@alloc = "no trade" if @alloc < 1.0
+
 
 			@kelly *= 100
 			@edge *= 100
