@@ -10,9 +10,10 @@ class TradesController < ApplicationController
 			stop = @trade.stop
 			targ1 = @trade.targ1
 			prob1 = @trade.prob1
-			prob2 = @trade.prob2
-			targ2 = @trade.targ2
-			stop2 = @trade.stop2
+			prob2 = @trade.prob2 ||= 0.0
+			targ2 = @trade.targ2 ||= 0.0
+			stop2 = @trade.stop2 ||= 0.0
+
 
 			risk = (fill - stop).abs
 			reward = (targ1 - fill).abs
@@ -21,6 +22,8 @@ class TradesController < ApplicationController
 
 			(@kelly, @edge) = kelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2)
 			@alloc = get_alloc(@kelly, 5000, security_id, risk).round(2)
+
+			@alloc = "no trade" if @alloc < 1.0
 
 			@kelly *= 100
 			@edge *= 100

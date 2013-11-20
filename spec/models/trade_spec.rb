@@ -34,16 +34,6 @@ describe Trade do
   	it { should_not be_valid }
   end
 
-  describe "when open is not present" do
-  	before { @trade.open = nil }
-  	it { should_not be_valid }
-  end
-
-  describe "when pl is not present" do
-     before { @trade.pl = nil }
-     it { should_not be_valid }
-  end
-
   describe "when fill is not present" do
     before { @trade.fill = nil }
     it { should_not be_valid }

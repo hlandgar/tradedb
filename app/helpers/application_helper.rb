@@ -12,26 +12,26 @@ module ApplicationHelper
 	end
 
 	def securities_option_list(user)
-		user.securities.all.map { |x| [x.symbol, x.id] }
+		user.securities.map { |x| [x.symbol, x.id] }
 	end
 
 	def kelly(security_id, stop, fill, target1, target2, prob1, prob2, options = { stop2: fill } )
 		
 		# calucate the profit to 2nd half of trade if stopped out at stop2
-		stop2 = options[:stop2]
-		give_back = (fill - stop2).abs
+		stop2 = options[:stop2] ||= fill
+		give_back = (fill - stop2).abs 
 
 		risk = (fill - stop).abs
-		rrg = give_back/risk
+		rrg = give_back/risk 
 		rr1 = (target1 - fill).abs/risk
-		rr2 = (target2 - fill).abs/risk
+		rr2 = (target2 - fill).abs/risk 
 
 		# r1 is if we make first target but second half of trade exits at stop2
 
 		r1 =  prob2 > 0 ? rr1/2 + rrg/2 : rr1 
 		r2 = rr2/2 + r1 
 		e1 = (prob1 * r1) - house(risk,security_id)/2
-		e2 = (prob2 * r2) - house(risk,security_id)/2
+		e2 = (prob2 * r2) - house(risk,security_id)/2 
 		q = 1 -prob1 -prob2
 
 		c = -q + e1 + e2 
