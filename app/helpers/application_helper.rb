@@ -17,7 +17,7 @@ module ApplicationHelper
 
 	def kelly(security_id, stop, fill, target1, target2, prob1, prob2, options = { stop2: fill } )
 		
-		# calucate the profit to 2nd half of trade if stopped out at stop2
+		# calcucate the profit to 2nd half of trade if stopped out at stop2
 		stop2 = options[:stop2] ||= fill
 		give_back = (fill - stop2).abs 
 

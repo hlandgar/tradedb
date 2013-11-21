@@ -17,6 +17,9 @@ class TradesController < ApplicationController
 				targ2 = @trade.targ2 ||= 0.0
 				stop2 = @trade.stop2 ||= 0.0
 
+				prob1 /= 100.0 if prob1 > 1
+				prob2 /= 100.0 if prob2 > 1
+
 
 				risk = (fill - stop).abs
 				reward = (targ1 - fill).abs
