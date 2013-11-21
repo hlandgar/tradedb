@@ -15,7 +15,11 @@ class TradesController < ApplicationController
 				prob1 = @trade.prob1 
 				prob2 = @trade.prob2 ||= 0.0
 				targ2 = @trade.targ2 ||= 0.0
-				stop2 = @trade.stop2 ||= 0.0
+				stop2 = @trade.stop2 ||= fill
+
+				stop2 = fill if stop2 == 0.0
+
+
 
 				prob1 /= 100.0 if prob1 > 1
 				prob2 /= 100.0 if prob2 > 1
