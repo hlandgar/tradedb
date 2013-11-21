@@ -2,7 +2,7 @@
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class="form-horizontal">
 		<div class="control-group">
-			<%= f.label :secutity_id, "Symbol", class: "control-label" %>
+			<%= f.label :security_id, "Symbol", class: "control-label" %>
 			<div class="controls">
 			<%= f.select(:security_id, securities_option_list(current_user),{}, class: "span2") %>
 			</div>

@@ -15,38 +15,50 @@ module ApplicationHelper
 		user.securities.map { |x| [x.symbol, x.id] }
 	end
 
-	def kelly(security_id, stop, fill, target1, target2, prob1, prob2, options = { stop2: fill } )
-		
-		# calcucate the profit to 2nd half of trade if stopped out at stop2
-		stop2 = options[:stop2] ||= fill
-		give_back = (fill - stop2).abs 
+	def kelly(security_id, stop, fill, target1, target2, prob1, prob2, options = { stop2: fill, sellpct: 0.5 } )
 
 		risk = (fill - stop).abs
-		rrg = give_back/risk 
-		rr1 = (target1 - fill).abs/risk
-		rr2 = (target2 - fill).abs/risk 
+		house_take = house(risk,security_id)
 
-		# r1 is if we make first target but second half of trade exits at stop2
+		if prob2 == 0
+			
+			rr1 = (target1 - fill).abs/risk
+			r1 = rr1
+			edge = (prob1 * r1) - (1 - prob1) - house_take
+			kelly = edge / r1
+			return [kelly.round(3), edge.round(3)]
 
-		r1 =  prob2 > 0 ? rr1/2 + rrg/2 : rr1 
-		r2 = rr2/2 + r1 
-		e1 = (prob1 * r1) - house(risk,security_id)/2
-		e2 = (prob2 * r2) - house(risk,security_id)/2 
-		q = 1 -prob1 -prob2
-
-		c = -q + e1 + e2 
-		b = -q*(r1 + r2) + (e1*r2) + (e2*r1) -e1 -e2
-		a = -q*r1*r2 - (e1*r2) - (e2*r1)
-
-		if prob2 > 0
-			[quad(a,b,c).select { |x| x >0 and x < 1}.max.round(3) ,c.round(3) ]
 		else
-			edge = e1 - q - house(risk,security_id)/2
-			[(edge / r1).round(3), edge.round(3)]
+
+			sellpct = options[:sellpct] || 0.5
+			keeppct = 1 - sellpct
+
+			stop2 = options[:stop2] || fill
+
+			give_back = (fill - stop2).abs
+
+			rrg = give_back/risk
+
+			rr1 = (target1 - fill).abs/risk
+			rr2 = (target2 - fill).abs/risk
+
+			r1 = (rr1 * sellpct) + (rrg * keeppct)
+
+			r2 = (rr2 * keeppct) + r1
+
+			e1 = (prob1 * r1) - (house_take * sellpct)
+			e2 = (prob2 * r2) - (house_take * keeppct)
+			q = 1 - prob1 - prob2
+
+			c = -q + e1 + e2 
+			b = -q*(r1 + r2) + (e1*r2) + (e2*r1) -e1 -e2
+			a = -q*r1*r2 - (e1*r2) - (e2*r1)
+
+			return [quad(a,b,c).select { |x| x >0 and x < 1}.max.round(3) ,c.round(3) ]
+
 		end
-
-
 	end
+
 
 	def quad(a,b,c)
 		fRoot1 = nil
