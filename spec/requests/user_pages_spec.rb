@@ -39,6 +39,8 @@ describe "UserPages" do
 				fill_in "Email",		with: "user@example.com"
 				fill_in "Password",		with: "foobar"
 				fill_in "Confirm Password",	with: "foobar"
+        fill_in "Account size", with: "50000"
+        fill_in "Kelly fraction", with: "3"
 			end
 	
 			it "should create a user" do
@@ -80,6 +82,8 @@ describe "UserPages" do
   		  fill_in "Email",		with: new_email
   		  fill_in "Password",	with: user.password
   		  fill_in "Confirm Password", with: user.password
+        fill_in "Account size", with: "30000"
+        fill_in "Kelly fraction", with: "4"
   		  click_button "Save changes"
   		end
 

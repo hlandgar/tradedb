@@ -3,7 +3,7 @@ require 'spec_helper'
 describe User do
   
   before { @user = User.new( name: "Example User", email: "user@example.com", password: "foobar",
-  				password_confirmation: "foobar") }
+  				password_confirmation: "foobar", account_size: "50000", kelly_fraction: "3") }
 
   subject { @user }
 
@@ -17,6 +17,8 @@ describe User do
   it { should respond_to(:admin) }
   it { should respond_to(:trades) }
   it { should respond_to(:securities) }
+  it { should respond_to(:kelly_fraction) }
+  it { should respond_to(:account_size) }
 
   it { should be_valid }
   it { should_not be_admin }
@@ -101,6 +103,27 @@ describe User do
   		expect(@user.reload.email).to eq mixed_case_email.downcase
   	end
   end
+
+  describe 'when account_size is not a number' do
+    before { @user.account_size = "aaaaa" }
+    it { should_not be_valid }
+  end
+
+  describe 'when account_size is negative' do
+    before { @user.account_size = -3000 }
+    it { should_not be_valid }
+  end
+
+  describe 'with kelly_fraction not a number' do
+      before { @user.kelly_fraction = "aaaaa" }
+    it { should_not be_valid }
+  end
+
+  describe 'with kelly_fraction is negative' do
+    before { @user.kelly_fraction = -3 }
+    it { should_not be_valid }
+  end
+
 
   describe "trade associations" do
     

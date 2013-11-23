@@ -32,13 +32,13 @@ class TradesController < ApplicationController
 				prob2 = 0.0 if !second_target?
 				@house = house(risk, security_id)
 			
-				fraction = 3.0
-				account_size = 50000
+				fraction = current_user.kelly_fraction
+				account_size = current_user.account_size
 
 
 				(@kelly, @edge) = kelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2, sellpct: sellpct )
 
-				@best_sellpct = getbestkelly(security_id,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2).round(2) * 100 if prob2 > 0.0
+				@best_sellpct = getbestkelly(security_id,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2).round(3) * 100 if prob2 > 0.0
 
 				@alloc = get_alloc(@kelly, account_size, security_id, risk, fraction).round(2)
 

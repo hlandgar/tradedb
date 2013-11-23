@@ -65,7 +65,9 @@
 						<%= f.text_field :sellpct, class: "span1", id: "appendedInput", type: "text" %>
 						<span class="add-on">%</span>
 					</div>			
-					<span class="help-inline"><%= number_to_percentage @best_sellpct %> is the optimal % to sell at Target 1</span>
+						<% if !@best_sellpct.blank? %>
+							<strong><span class="help-inline"><%= number_to_percentage @best_sellpct %> is the optimal % to sell at Target 1</span></strong>
+						<% end %>
 				</div>
 			</div>
 	

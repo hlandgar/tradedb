@@ -14,7 +14,9 @@ class User < ActiveRecord::Base
 		uniqueness: { case_sensitive: false }
 	has_secure_password
 	validates :password, length: { minimum: 6 }
-	validates :password_confirmation, presence: true;
+	validates :password_confirmation, presence: true
+	validates :account_size, presence:true, numericality: { greater_than: 0 }
+	validates :kelly_fraction, presence:true, numericality: { only_integer: true, greater_than: 0 }
 	
 
 	def User.new_remember_token
