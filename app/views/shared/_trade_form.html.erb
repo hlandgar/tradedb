@@ -1,3 +1,5 @@
+<%= javascript_include_tag "trader" %>
+
 <%= form_for(@trade) do |f| %>
 	<%= render 'shared/error_messages', object: f.object %>
 	<div class="form-horizontal">
@@ -30,7 +32,7 @@
 		</div>
 
 		<div class="control-group">
-			<%= f.label :prob1, "Prob of reaching 1st Target", class: "control-label" %>								
+			<%= f.label :prob1, "Probability of reaching 1st Target", class: "control-label" %>								
 				<div class="controls">
 					<div class="input-append">	
 					<%= f.text_field :prob1, class: "span1", id: "appendedInput", type: "text" %>
@@ -40,28 +42,53 @@
 		</div>
 
 		<div class="control-group">
-			<%= f.label :targ2, "2nd Target", class: "control-label" %>
+			
 			<div class="controls">
-				<%= f.text_field :targ2, class: "input-small" %>
+				<%= f.check_box :second_target, class: "checkbox 2nd_target" %>
+						2nd Target
 			</div>
 		</div>
 
+	<div id="target_2">
+
 		<div class="control-group">
-			<%= f.label :prob2, "Prob of reaching 2nd Target", class: "control-label" %>
-			<div class="controls">
-				<div class="input-append">
-					<%= f.text_field :prob2, class: "span1", id: "appendedInput", type: "text" %>
-						<span class="add-on">%</span>
+				<%= f.label :targ2, "2nd Target", class: "control-label" %>
+				<div class="controls">
+					<%= f.text_field :targ2, class: "input-small" %>
 				</div>
 			</div>
-		</div>
 
-		<div class="control-group">
-			<%= f.label :stop2, "trailing stop after Target 1 reached", class: "control-label" %>
-			<div class="controls">
-				<%= f.text_field :stop2, class: "input-small" %>
+			<div class="control-group">
+				<%= f.label :sellpct, "Portion to sell at Target 1", class: "control-label" %>
+				<div class="controls">					
+					<div class="input-append">
+						<%= f.text_field :sellpct, class: "span1", id: "appendedInput", type: "text" %>
+						<span class="add-on">%</span>
+					</div>			
+					<span class="help-inline"><%= number_to_percentage @best_sellpct %> is the optimal % to sell at Target 1</span>
+				</div>
 			</div>
+	
+			<div class="control-group">
+				<%= f.label :prob2, "Probability of reaching 2nd Target", class: "control-label" %>
+				<div class="controls">
+					<div class="input-append">
+						<%= f.text_field :prob2, class: "span1", id: "appendedInput", type: "text" %>
+							<span class="add-on">%</span>						
+					</div>
+					<span class="help-inline">This is the stand alone probability of reaching target 2</span>
+				</div>
+			</div>
+	
+			<div class="control-group">
+				<%= f.label :stop2, "trailing stop after Target 1 reached", class: "control-label" %>
+				<div class="controls">
+					<%= f.text_field :stop2, class: "input-small" %>
+					<span class="help-inline">Defaults to breakeven if left blank</span>
+				</div>
+	
 		</div>		
+	</div>
 
 		<table class="table table-bordered">
 			<thead>
@@ -83,7 +110,6 @@
 				</tr>
 			</tbody>
 		</table>
-
 	</div>
 	<div class="button-group">
 		<%= f.submit "Calculate", class: "btn btn-large btn-primary" %>

@@ -18,20 +18,29 @@ class TradesController < ApplicationController
 				stop2 = @trade.stop2 ||= fill
 
 				stop2 = fill if stop2 == 0.0
+				second_target = @trade.second_target || false
+				sellpct = @trade.sellpct || 0.5
 
 
 
 				prob1 /= 100.0 if prob1 > 1
 				prob2 /= 100.0 if prob2 > 1
-
+				sellpct /=100.0 if sellpct > 1
 
 				risk = (fill - stop).abs
 				reward = (targ1 - fill).abs
+				prob2 = 0.0 if !second_target?
 				@house = house(risk, security_id)
+			
+				fraction = 3.0
+				account_size = 50000
 
 
-				(@kelly, @edge) = kelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2)
-				@alloc = get_alloc(@kelly, 5000, security_id, risk).round(2)
+				(@kelly, @edge) = kelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2, sellpct: sellpct )
+
+				@best_sellpct = getbestkelly(security_id,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2).round(2) * 100 if prob2 > 0.0
+
+				@alloc = get_alloc(@kelly, account_size, security_id, risk, fraction).round(2)
 
 				@alloc = "no trade" if @alloc < 1.0
 
@@ -39,6 +48,7 @@ class TradesController < ApplicationController
 				@kelly *= 100
 				@edge *= 100
 				@house *=100
+
 				@rr = (reward/risk).round(1)
 			end
 
@@ -63,7 +73,11 @@ class TradesController < ApplicationController
 
 		def trade_params
 			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments,
-																	:security_id, :stop2, :commit )
+																	:security_id, :stop2, :commit, :second_target, :sellpct )
+		end
+
+		def second_target?
+			@trade.second_target == true
 		end
 end
 

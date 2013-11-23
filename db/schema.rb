@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131117211228) do
+ActiveRecord::Schema.define(version: 20131122232734) do
 
   create_table "securities", force: true do |t|
     t.string   "symbol"
@@ -48,6 +48,8 @@ ActiveRecord::Schema.define(version: 20131117211228) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "stop2"
+    t.boolean  "second_target"
+    t.float    "sellpct"
   end
 
   add_index "trades", ["security_id"], name: "index_trades_on_security_id"

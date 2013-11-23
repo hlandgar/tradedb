@@ -47,20 +47,19 @@ describe "TradePages" do
 				before do
 				  fill_in "trade[targ2]", with: "1792"
 				  fill_in "trade[prob2]", with: "15"
-				  fill_in "trade[prob1]", with: "15"
 				  fill_in "trade[stop2]", with: ""
 
 				  click_button "Calculate"
 				end
 
-				it { should have_selector('td', "4.600%") }
+				it { should have_selector('td', "1.100%") }
 
 				before do 
 					fill_in "trade[stop2]", with: "1785"
 					click_button "Calculate"
 				end
 
-				it { should have_selector('td', "12.000%") }				
+				it { should have_selector('td', "10.300%") }				
 			end			
 		end
 	end

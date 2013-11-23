@@ -25,6 +25,8 @@ describe Trade do
   it { should respond_to(:position) }
   it { should respond_to(:security_id) }
   it { should respond_to(:stop2) }
+  it { should respond_to(:second_target) }
+  it { should respond_to(:sellpct) }
   its(:user) { should eq user }
 
   it { should be_valid }
