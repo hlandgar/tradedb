@@ -115,6 +115,23 @@
 	</div>
 	<div class="button-group">
 		<%= f.submit "Calculate", class: "btn btn-large btn-primary" %>
-		<%= f.submit "Post", class: "btn btn-large" %>
+		<a href="#tradeModal" role="button" class="btn btn-large" data-toggle="modal">Enter Trade</a>
+		
 	</div>
+	<div id="tradeModal" class="modal hide fade" tabindex="-1" role="dialog"
+aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal"
+    aria-hidden="true">×</button>
+    <h3 id="myModalLabel">Enter Trade Details</h3>
+  </div>
+  <div class="modal-body">
+    <p>One fine body…</p>
+  </div>
+  <div class="modal-footer">
+    <button class="btn" data-dismiss="modal"
+    aria-hidden="true">Close</button>
+    <%= f.submit "Post", class: "btn btn-primary" %>
+  </div>
+</div>
 <% end %>
