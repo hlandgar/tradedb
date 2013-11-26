@@ -7,3 +7,4 @@ $(function () {
 $('#tradeModal').modal({
 				backdrop: false
 })
+

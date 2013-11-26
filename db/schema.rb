@@ -11,7 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131123194635) do
+ActiveRecord::Schema.define(version: 20131126011008) do
+
+  create_table "entries", force: true do |t|
+    t.datetime "entrytime"
+    t.integer  "quantity"
+    t.integer  "trade_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.decimal  "price"
+  end
+
+  add_index "entries", ["trade_id"], name: "index_entries_on_trade_id"
 
   create_table "securities", force: true do |t|
     t.string   "symbol"
@@ -63,7 +74,7 @@ ActiveRecord::Schema.define(version: 20131123194635) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           default: false
-    t.float    "kelly_fraction"
+    t.integer  "kelly_fraction"
     t.decimal  "account_size"
   end
 

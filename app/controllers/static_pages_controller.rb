@@ -1,6 +1,10 @@
 class StaticPagesController < ApplicationController
   def home
-  	@trade = current_user.trades.build if signed_in?
+  	if signed_in?
+      @trade = current_user.trades.build
+      @trade.entries.build
+    end
+    
   	@edge ||= 0.0
   	@kelly ||= 0.0
   	@house ||= 0.0    

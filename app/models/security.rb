@@ -1,5 +1,8 @@
 class Security < ActiveRecord::Base
 	belongs_to :user
+
+	before_save { symbol.upcase! 
+	}
 	default_scope -> { order('sort_order') }
 	validates :user_id, presence: true
 	validates :symbol, presence: true, uniqueness: { case_sensitive: false, scope: :user_id }

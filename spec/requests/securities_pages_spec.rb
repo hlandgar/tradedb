@@ -67,7 +67,7 @@ describe "SecuritiesPages" do
 			end
 
 			it { should have_selector('div.alert,alert-success') }
-			specify { expect(security.reload.symbol).to eq new_symbol }
+			specify { expect(security.reload.symbol).to eq new_symbol.upcase }
 			specify { expect(security.reload.description).to eq new_desc }
 		end
 
