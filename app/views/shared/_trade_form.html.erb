@@ -1,7 +1,9 @@
 <%= javascript_include_tag "trader" %>
 
-<%= form_for(@trade) do |f| %>
-	<%= render 'shared/error_messages', object: f.object %>
+<%= form_for @trade do |f| %>
+
+		<%= render 'shared/error_messages', object: f.object %>
+	
 	<div class="form-horizontal">
 		<div class="control-group">
 			<%= f.label :security_id, "Symbol", class: "control-label" %>
@@ -95,11 +97,11 @@
 		<table class="table table-bordered">
 			<thead>
 				<tr>
-					<td>R/R</td>					
-					<td>Egde</td>
-					<td>Kelly</td>
-					<td>House</td>
-					<td>Allocation</td>
+					<th>R/R</th>					
+					<th>Egde</th>
+					<th>Kelly</th>
+					<th>House</th>
+					<th>Allocation</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -115,18 +117,31 @@
 	</div>
 	<div class="button-group">
 		<%= f.submit "Calculate", class: "btn btn-large btn-primary" %>
-		<a href="#tradeModal" role="button" class="btn btn-large" data-toggle="modal">Enter Trade</a>
+		<a href="#tradeModal" role="button" class="btn btn-large" data-toggle="modal" id="modalbutton" >Enter Trade</a>
 		
 	</div>
 	<div id="tradeModal" class="modal hide fade" tabindex="-1" role="dialog"
-aria-labelledby="myModalLabel" aria-hidden="true">
+									aria-labelledby="myModalLabel" aria-hidden="true">
   <div class="modal-header">
+
     <button type="button" class="close" data-dismiss="modal"
     aria-hidden="true">×</button>
     <h3 id="myModalLabel">Enter Trade Details</h3>
   </div>
   <div class="modal-body">
+
+  	<% if @trade.entries.first.errors.any? %>
+  		<div id="#error_explanation" class="alert alert-error">
+  			<%= @trade.entries.first.errors.full_messages do |msg| %>
+  				<li><%=  msg %></li>
+  			<% end %>
+  		</div>
+  	<% end %>
+
+ 
+
     <%= f.fields_for :entries do |e| %>
+
     	<div class="control-group">
     		<%= e.label :entrytime, "Entry timestamp" %>
     	  <div class="controls">
@@ -139,7 +154,14 @@ aria-labelledby="myModalLabel" aria-hidden="true">
 
     	<%= e.label :price %>
     	<%= e.text_field :price, class: "input-small", value: @price %>
+    	
     <% end -%>
+
+    <%= f.label :desc, "Descripton" %>
+    <%= f.text_field :desc, class: "span7" %>
+
+    <%= f.label :comments %>
+    <%= f.text_area :comments, class: "span10" %>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal"

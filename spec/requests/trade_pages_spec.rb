@@ -34,7 +34,7 @@ describe "TradePages" do
 			describe "Calculate test" do
 				before do
 					select "ES", from: "Symbol"
-				  fill_in "Fill", with: "1777"
+				  fill_in "trade[fill]", with: "1777"
 				  fill_in "Stop", with: "1774"
 				  fill_in "1st Target", with: "1789"
 				  fill_in "trade[prob1]", with: "30"

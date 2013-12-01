@@ -4,9 +4,18 @@ class TradesController < ApplicationController
 
 	def create
 		@trade = current_user.trades.build(trade_params)
+		@trade.pass = false
+
+
+		
 
 		if params[:commit] == 'Calculate' 
+			@trade.pass = true
+
+			
+
 			if @trade.valid?
+				
 
 				security_id = @trade.security_id
 				fill = @trade.fill 
@@ -45,7 +54,9 @@ class TradesController < ApplicationController
 				@alloc = "no trade" if @alloc < 1.0
 
 				@price = fill
-				@quantity = @alloc.round(0) if  @alloc >= 1.0
+				@trade.kelly = @kelly
+
+				@quantity = @alloc.round(0) unless @alloc == "no trade"
 
 
 				@kelly *= 100
@@ -76,13 +87,19 @@ class TradesController < ApplicationController
 
 		def trade_params
 			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments,
-												:security_id, :stop2, :commit, :second_target, :sellpct,
+												:security_id, :stop2, :commit, :second_target, :sellpct, :pass,
 												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id] )
+		end
+
+		def calculate_params
+			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :security_id, :commit,
+																				 :second_target, :sellpct )
 		end
 
 		def second_target?
 			@trade.second_target == true
 		end
+
 end
 
 		

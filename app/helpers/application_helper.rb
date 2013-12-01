@@ -11,6 +11,12 @@ module ApplicationHelper
 		end
 	end
 
+	def setup_entry(trade)
+		trade.entries.build if trade.entries.empty?
+		return trade
+	end
+
+	
 	def securities_option_list(user)
 		user.securities.map { |x| [x.symbol, x.id] }
 	end

@@ -5,7 +5,11 @@ describe Entry do
   let(:user) { FactoryGirl.create(:user) }
   let(:trade) { FactoryGirl.create(:trade, user: user) }
 
-  before { @entry = trade.entries.build(quantity: 10, entrytime: "#{Time.now}", price: 1799.25) }
+  before do 
+    @entry = trade.entries.build(quantity: 10, entrytime: "#{Time.current}", price: 1799.25)
+    @trade = @entry.trade 
+    @trade.pass = false
+  end
 
   subject { @entry }
 
@@ -13,7 +17,12 @@ describe Entry do
   it { should respond_to(:entrytime) }
   it { should respond_to(:trade_id) }
   it { should respond_to(:price) }
+  
+
+
   its(:trade) { should eq trade }
+
+  its(:run_validation) { should eq true }
 
   it { should be_valid }
 
@@ -32,12 +41,7 @@ describe Entry do
   	it { should_not be_valid }
   end
 
-  describe 'when trade_id is not present' do
-  	before { @entry.trade_id = nil }
-  	it { should_not be_valid }
-  end
-
-  describe 'when entrytime is not present' do
+   describe 'when entrytime is not present' do
     before { @entry.entrytime = nil }
   	it { should_not be_valid }
   end

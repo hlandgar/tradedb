@@ -4,7 +4,3 @@ $(function () {
   }).change(); //ensure visible state matches initially
 });
 
-$('#tradeModal').modal({
-				backdrop: false
-})
-
