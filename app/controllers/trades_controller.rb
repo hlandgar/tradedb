@@ -1,5 +1,6 @@
 class TradesController < ApplicationController
 	include ApplicationHelper
+	include UsersHelper
 	before_action :signed_in_user
 
 	def create
@@ -54,9 +55,11 @@ class TradesController < ApplicationController
 				@alloc = "no trade" if @alloc < 1.0
 
 				@price = fill
-				@trade.kelly = @kelly
+				
+				
 
 				@quantity = @alloc.round(0) unless @alloc == "no trade"
+				@desc = make_desc(fill,stop,security_id,@quantity)
 
 
 				@kelly *= 100
@@ -87,7 +90,7 @@ class TradesController < ApplicationController
 
 		def trade_params
 			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments,
-												:security_id, :stop2, :commit, :second_target, :sellpct, :pass,
+												:security_id, :stop2, :commit, :second_target, :sellpct, :pass, :kelly,
 												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id] )
 		end
 

@@ -6,6 +6,7 @@ Tradedb::Application.routes.draw do
 
   resources :sessions, only: [:new, :create, :destroy]
   resources :trades, only: [:create, :destroy]
+  resources :quotebases
   
   root 'static_pages#home'
 

@@ -1,0 +1,9 @@
+<%= provide(:title, "Quotebase") %>
+<h1>Quote conversion table</h1>
+<div class="row">
+	<div span10>
+		<% if @quotes.any?  %>
+			<%= render partial: "quotebase", collection: @quotes, as: :q %>
+		<% end %>
+	</div>
+</div>

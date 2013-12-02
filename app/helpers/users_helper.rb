@@ -9,6 +9,15 @@ module UsersHelper
 		
 	end
 
+	def long_or_short(fill,stop)
+		fill>stop ? "Long " : "Short "
+	end
+
+	def make_desc(fill,stop,sym_id, quantity)
+		desc = current_user.securities.find(sym_id).description
+		long_or_short(fill,stop) + "#{quantity} " + desc
+	end
+
 
 
 end

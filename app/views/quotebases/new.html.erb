@@ -1,0 +1,12 @@
+<%= provide(:title, "Quotes") %>
+<h1>Create a new quote</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for @quote do |f| %>
+			<%= render 'quote_fields', f: f %>
+
+			<%= f.submit "Save", class: "btn btn-large btn-primary" %>
+		<% end %>
+	</div>
+</div>

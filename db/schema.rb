@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131126011008) do
+ActiveRecord::Schema.define(version: 20131201183637) do
 
   create_table "entries", force: true do |t|
     t.datetime "entrytime"
@@ -23,6 +23,13 @@ ActiveRecord::Schema.define(version: 20131126011008) do
   end
 
   add_index "entries", ["trade_id"], name: "index_entries_on_trade_id"
+
+  create_table "quotebases", force: true do |t|
+    t.string   "symbol"
+    t.string   "yahoo_symbol"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "securities", force: true do |t|
     t.string   "symbol"

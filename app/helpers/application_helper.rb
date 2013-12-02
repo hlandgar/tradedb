@@ -120,4 +120,16 @@ module ApplicationHelper
 
 		
 	end
+
+	def get_quote(symbol)
+		quote = Quotebase.quote(symbol, reload: true)
+		[quote.ask_realtime, quote.bid_realtime, quote.last_trade_time]
+	end
+
+	def get_spread(symbol)
+		tick = current_user.securities.find_by_symbol(symbol).tick_size
+		quote = Quotebase.quote(symbol)
+
+		((quote.ask_realtime - quote.bid_realtime)	/ tick	).round(0)
+	end
 end

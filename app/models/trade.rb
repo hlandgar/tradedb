@@ -5,6 +5,8 @@ class Trade < ActiveRecord::Base
 
 	accepts_nested_attributes_for :entries
 
+	before_save :set_position
+
 
 
 	default_scope -> { order('created_at DESC')}
@@ -26,9 +28,15 @@ class Trade < ActiveRecord::Base
 	validates :stop2, numericality: { greater_than_or_equal_to: 0 }, allow_blank: true
 	validates :sellpct, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_blank: true
 
+	def set_position		
+		self.position = self.entries.sum(:quantity) if self.entries.count > 0	
+		self.open = self.position != 0	
+	end
+
 	private
 
 	def set_nest(entry)
 		entry.trade ||= self
 	end
+
 end
