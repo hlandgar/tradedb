@@ -5,23 +5,17 @@ class Quotebase < ActiveRecord::Base
 
 	after_save :reload_table
 
-	@@q_table = {}
 	cattr_accessor :q_table
+	@@q_table = {}
 
 
 	def self.quote(symbol, options= {} )
 
-		@@q_table = {} if options[:reload]
-		@@q_table ||= {}
-		if @@q_table.empty?
-			:reload_table			
-		end
-
-		@@q_table[symbol] ||= "no quote"
+		@@q_table[symbol]
 		
 	end
 
-	def reload_table
+	def self.reload_table
 		@@q_table = {}
 
 		if Quotebase.count > 0
