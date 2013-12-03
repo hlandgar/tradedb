@@ -15,5 +15,6 @@ namespace :db do
 							password: password,
 							password_confirmation: password)
 		end
+		Quotebase.create!(symbol:"ES", yahoo_symbol:"ESZ13.CME")
 	end
 end

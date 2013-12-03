@@ -5,7 +5,11 @@ describe "SecuritiesPages" do
 	subject { page }
 
 	let(:user) { FactoryGirl.create(:user) }
-	before { sign_in user }
+	before do
+		Quotebase.create!(symbol: "ES", yahoo_symbol: "ESZ13.CME")
+		sign_in user
+
+	end
 
 	describe 'security creation' do
 		before { visit new_user_security_path(user) }

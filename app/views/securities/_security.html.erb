@@ -1,8 +1,8 @@
 <li>
 	<span class="security"><%= link_to security.symbol, edit_user_security_path(current_user, security) %>  </span>
 	<span class="desciption"><%= security.description %></span>
-	<span><%= get_quote(security.symbol) %></span>
-	<span><%= get_spread(security.symbol) %></span>
+	<span><%= security.sort_order %></span>
+	
 
 
 </li>

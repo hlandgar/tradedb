@@ -1,5 +1,7 @@
 class QuotebasesController < ApplicationController
 
+	before_action :admin_user
+
 	def new
 		@quote = Quotebase.new
 	end
@@ -8,7 +10,7 @@ class QuotebasesController < ApplicationController
 		@quote = Quotebase.new(quote_params)
 		if @quote.save
 			flash[:success] = "quote saved"
-			render "index"
+			redirect_to quotebases_path
 		else
 			render "new"
 		end
@@ -20,7 +22,7 @@ class QuotebasesController < ApplicationController
 	end
 
 	def edit
-		@quote = params[quote_params]
+		@quote = Quotebase.find(params[:id])
 	end
 
 	def destroy
@@ -28,6 +30,13 @@ class QuotebasesController < ApplicationController
 	end
 
 	def update
+		@quote = Quotebase.find(params[:id])
+		if @quote.update_attributes(quote_params)
+			flash[:success] = "Quote updated"
+			redirect_to quotebases_path
+		else
+			render 'edit'
+		end
 		
 	end
 
@@ -36,4 +45,10 @@ class QuotebasesController < ApplicationController
 	def quote_params
 		params.require(:quotebase).permit(:symbol, :yahoo_symbol)
 	end
+
+	private
+
+	   def admin_user
+      redirect_to(root_url) unless current_user.admin?
+    end
 end
