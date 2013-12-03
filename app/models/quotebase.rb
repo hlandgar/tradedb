@@ -10,11 +10,11 @@ class Quotebase < ActiveRecord::Base
 
 
 	def self.quote(symbol, options= {} )
-		
+
 		@@q_table = {} if options[:reload]
 		@@q_table ||= {}
 		if @@q_table.empty?
-			reload_table			
+			:reload_table			
 		end
 
 		@@q_table[symbol] ||= "no quote"
