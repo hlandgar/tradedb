@@ -40,6 +40,7 @@ class TradesController < ApplicationController
 				risk = (fill - stop).abs
 				reward = (targ1 - fill).abs
 				prob2 = 0.0 if !second_target?
+				@spread = get_spread(current_user.securities.find(security_id).symbol)
 				@house = house(risk, security_id)
 			
 				fraction = current_user.kelly_fraction

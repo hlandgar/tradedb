@@ -104,7 +104,7 @@ module ApplicationHelper
 
 	def house(risk, security_id)
 		security = current_user.securities.find(security_id)
-		tick_cost = security.tickval * security.default_spread
+		tick_cost = security.tickval * get_spread(security.symbol)
 		tick_size = security.tick_size
 		commiss = 5.0
 		risk_in_ticks = risk / tick_size
@@ -122,14 +122,19 @@ module ApplicationHelper
 	end
 
 	def get_quote(symbol)
-		quote = Quotebase.quote(symbol, reload: true)
+		quote = Security.quote(symbol)
 		[quote.ask_realtime, quote.bid_realtime, quote.last_trade_time]
 	end
 
 	def get_spread(symbol)
-		tick = current_user.securities.find_by_symbol(symbol).tick_size
-		quote = Quotebase.quote(symbol)
+		s = current_user.securities.find_by_symbol(symbol)
+		tick = s.tick_size
+		quote = Security.quote(symbol)
 
-		((quote.ask_realtime - quote.bid_realtime)	/ tick	).round(0)
+		if quote == "no quote" or (quote.ask_realtime == quote.bid_realtime)
+			s.default_spread
+		else 
+			((quote.ask_realtime - quote.bid_realtime)	/ tick	).round(0)
+		end
 	end
 end

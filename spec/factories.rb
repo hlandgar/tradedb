@@ -51,5 +51,10 @@ FactoryGirl.define do
 		price 1780.00
 	end
 
+	factory :quotebase do
+		symbol "ES"
+		yahoo_symbol "ESZ13.CME"
+	end
+
 	
 end

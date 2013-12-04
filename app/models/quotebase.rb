@@ -3,19 +3,22 @@ class Quotebase < ActiveRecord::Base
 	validates :symbol, presence: true, uniqueness: { case_sensitive: false }
 	validates :yahoo_symbol, presence: true
 
-	after_save :reload_table
+	after_save  :reload_table
 
 	cattr_accessor :q_table
 	@@q_table = {}
 
 
 	def self.quote(symbol, options= {} )
+		:reload_table if options[:reload]
 
 		@@q_table[symbol]
 		
 	end
 
-	def self.reload_table
+	
+
+	def reload_table
 		@@q_table = {}
 
 		if Quotebase.count > 0

@@ -8,6 +8,7 @@ describe "TradePages" do
 	before do 
 		sign_in user
 		FactoryGirl.create(:security, user: user)
+		FactoryGirl.create(:quotebase)
 	end
 
 	describe "trade creation" do

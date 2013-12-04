@@ -20,8 +20,8 @@ class Security < ActiveRecord::Base
 	def self.quote(symbol)
 		if sec = Quotebase.find_by_symbol(symbol)
 			yahoo_symbol = sec.yahoo_symbol
-			q = StockQuote::Stock.quote(yahoo_symbol)
-			[q.last_trade_price_only, q.bid_realtime, q.ask_realtime, (q.ask_realtime - q.bid_realtime)]
+			q = Rails.cache.fetch(symbol, expires_in: 1.minute){ StockQuote::Stock.quote(yahoo_symbol) }
+			
 		else 
 			"no quote"
 		end
