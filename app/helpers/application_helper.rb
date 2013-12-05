@@ -71,11 +71,11 @@ module ApplicationHelper
 		end
 	end
 
-	def getbestkelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2)
+	def getbestkelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2, spread: spread)
 		results = []
 		0.step(1,0.10).each do |sellpct|
 			results << [sellpct, kelly(security_id,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2,
-			 												sellpct: sellpct)[0] ]
+			 												sellpct: sellpct, spread: spread)[0] ]
 		end
 		results.max_by(&:last)[0]
 
