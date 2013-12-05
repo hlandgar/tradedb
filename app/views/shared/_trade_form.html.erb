@@ -94,7 +94,7 @@
 				<%= f.label :sellpct, "Portion to sell at Target 1", class: "control-label" %>
 				<div class="controls">					
 					<div class="input-append">
-						<%= f.text_field :sellpct, class: "span1", id: "appendedInput", type: "text" %>
+						<%= f.text_field :sellpct, value: @sellpct, class: "span1", id: "appendedInput", type: "text" %>
 						<span class="add-on">%</span>
 					</div>			
 						<% if !@best_sellpct.blank? %>

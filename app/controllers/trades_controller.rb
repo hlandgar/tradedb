@@ -57,7 +57,7 @@ class TradesController < ApplicationController
 					@price = fill
 
 					@spread = spread
-					
+					@sellpct = sellpct * 100
 					
 
 					@quantity = @alloc.round(0) unless @alloc == "no trade"
