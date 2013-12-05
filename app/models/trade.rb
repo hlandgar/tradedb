@@ -7,7 +7,7 @@ class Trade < ActiveRecord::Base
 
 	before_save :set_position
 
-
+	attr_accessor :spread
 
 	default_scope -> { order('created_at DESC')}
 

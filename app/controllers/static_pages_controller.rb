@@ -1,8 +1,11 @@
 class StaticPagesController < ApplicationController
+  include ApplicationHelper
   def home
   	if signed_in?
       @trade = current_user.trades.build
       @entry = @trade.entries.build
+      @spread = get_spread("ES")
+      @sellpct = 50
   
     end
     

@@ -22,10 +22,11 @@ module ApplicationHelper
 	end
 
 	def kelly(security_id, stop, fill, target1, target2, prob1, prob2, 
-																			options = { stop2: fill, sellpct: 0.5 } )
+																			options = { stop2: fill, sellpct: 0.5, spread: 1 } )
 
 		risk = (fill - stop).abs
-		house_take = house(risk,security_id)
+		spread = options[:spread]
+		house_take = house(risk,security_id, spread)
 
 		if prob2 == 0
 			
@@ -102,9 +103,9 @@ module ApplicationHelper
 		return [p1_new, p2_new]
 	end
 
-	def house(risk, security_id)
+	def house(risk, security_id, spread)
 		security = current_user.securities.find(security_id)
-		tick_cost = security.tickval * get_spread(security.symbol)
+		tick_cost = security.tickval * spread
 		tick_size = security.tick_size
 		commiss = 5.0
 		risk_in_ticks = risk / tick_size
