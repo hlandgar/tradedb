@@ -164,8 +164,8 @@ describe "UserPages" do
 
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
-    let!(:t1) { FactoryGirl.create(:trade, user: user, comments: "long ES") }
-    let!(:t2) { FactoryGirl.create(:trade, user: user, comments: "long 6E") }
+    let!(:t1) { FactoryGirl.create(:trade, user: user, desc: "long ES") }
+    let!(:t2) { FactoryGirl.create(:trade, user: user, desc: "long 6E") }
 
     before { visit user_path(user) }
 
@@ -173,8 +173,8 @@ describe "UserPages" do
     it { should have_title( user.name) }
 
     describe "trades" do
-      it { should have_content(t1.comments) }
-      it { should have_content(t2.comments) }
+      it { should have_content(t1.desc) }
+      it { should have_content(t2.desc) }
       it { should have_content(user.trades.count) }
     end
   end

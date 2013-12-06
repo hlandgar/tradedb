@@ -1,6 +1,6 @@
 <% provide(:title, @user.name) %>
 <div class="row">
-	<aside class="span4">
+	<aside class="span2">
 		<section>
 			<h1>
 				<%= gravatar_for @user %>
@@ -8,12 +8,17 @@
 			</h1>
 		</section>
 	</aside>
-	<div class="span8">
+	<div class="span10">
 		<% if @user.trades.any? %>
 			<h3>Trades (<%= @user.trades.count %>)</h3>
-			<ol class="trades">
+			<table class="trades table">
+				<thead>
+					<th>Date</th>
+					<th>Description</th>
+
+				</thead>
 				<%= render @trades %>
-			</ol>
+			</table>
 			<%= will_paginate @trades %>
 		<% end %>
 	</div>
