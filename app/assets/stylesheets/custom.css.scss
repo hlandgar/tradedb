@@ -140,6 +140,8 @@ input {
 	height: auto !important;
 }
 
+
+
 #error_explanation {
 	color: #f00;
 	ul {
@@ -164,10 +166,16 @@ input {
 }
 
 #tradeModal {
-	max-height: 800px;
+	
 	width: 900px;
 	margin: 0 0 0 -450px;
+
+	.modal-body {
+		max-height: 1200px;
+	}
 }
+
+
 
 
 /* misc */

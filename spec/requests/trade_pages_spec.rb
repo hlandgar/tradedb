@@ -9,6 +9,7 @@ describe "TradePages" do
 		sign_in user
 		FactoryGirl.create(:security, user: user)
 		FactoryGirl.create(:quotebase)
+		@conditions = Trade.get_market_condition
 	end
 
 	describe "trade creation" do

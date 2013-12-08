@@ -41,6 +41,7 @@ class TradesController < ApplicationController
 					prob2 = 0.0 if !second_target?
 					
 					@house = house(risk, security_id, spread)
+
 				
 					fraction = current_user.kelly_fraction
 					account_size = current_user.account_size
@@ -97,6 +98,7 @@ class TradesController < ApplicationController
 		def trade_params
 			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments,
 												:security_id, :stop2, :commit, :second_target, :sellpct, :pass, :kelly, :get_spread, :spread,
+												 :market_condition => [],
 												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id] )
 		end
 

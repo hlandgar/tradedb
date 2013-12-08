@@ -5,6 +5,8 @@ namespace :db do
 			email: "example@railstutorial.org",
 			password: "foobar",
 			password_confirmation: "foobar",
+			account_size: 50000.00,
+			kelly_fraction: 3,
 			admin: true)
 		99.times do |n|
 			name = Faker::Name.name
@@ -13,7 +15,9 @@ namespace :db do
 			User.create!(name: name,
 							email: email,
 							password: password,
-							password_confirmation: password)
+							password_confirmation: password,
+							account_size: 50000.00,
+							kelly_fraction: 3)
 		end
 		Quotebase.create!(symbol:"ES", yahoo_symbol:"ESZ13.CME")
 	end

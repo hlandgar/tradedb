@@ -4,7 +4,7 @@ describe Trade do
   
   let(:user) { FactoryGirl.create(:user) }
   before { @trade = user.trades.build(comments: "first trade", open: true, pl:0, fill:1780, stop:1775,
-            targ1:1790, prob1:0.50, desc: "long 1 ES", security_id: 1) }
+            targ1:1790, prob1:0.50, desc: "long 1 ES", security_id: 1, market_condition: ["Balance"]) }
 
   subject { @trade }
 
@@ -28,6 +28,7 @@ describe Trade do
   it { should respond_to(:second_target) }
   it { should respond_to(:sellpct) }
   it { should respond_to(:spread) }
+  it { should respond_to(:market_condition)}
 
   
   its(:user) { should eq user }

@@ -11,7 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131201183637) do
+ActiveRecord::Schema.define(version: 20131208043503) do
+
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
   create_table "entries", force: true do |t|
     t.datetime "entrytime"
@@ -22,7 +25,7 @@ ActiveRecord::Schema.define(version: 20131201183637) do
     t.decimal  "price"
   end
 
-  add_index "entries", ["trade_id"], name: "index_entries_on_trade_id"
+  add_index "entries", ["trade_id"], name: "index_entries_on_trade_id", using: :btree
 
   create_table "quotebases", force: true do |t|
     t.string   "symbol"
@@ -46,7 +49,7 @@ ActiveRecord::Schema.define(version: 20131201183637) do
     t.integer  "user_id"
   end
 
-  add_index "securities", ["symbol"], name: "index_securities_on_symbol"
+  add_index "securities", ["symbol"], name: "index_securities_on_symbol", using: :btree
 
   create_table "trades", force: true do |t|
     t.integer  "user_id"
@@ -68,10 +71,12 @@ ActiveRecord::Schema.define(version: 20131201183637) do
     t.decimal  "stop2"
     t.boolean  "second_target"
     t.float    "sellpct"
+    t.text     "market_condition", array: true
   end
 
-  add_index "trades", ["security_id"], name: "index_trades_on_security_id"
-  add_index "trades", ["user_id", "created_at"], name: "index_trades_on_user_id_and_created_at"
+  add_index "trades", ["market_condition"], name: "index_trades_on_market_condition", using: :gin
+  add_index "trades", ["security_id"], name: "index_trades_on_security_id", using: :btree
+  add_index "trades", ["user_id", "created_at"], name: "index_trades_on_user_id_and_created_at", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -85,7 +90,7 @@ ActiveRecord::Schema.define(version: 20131201183637) do
     t.decimal  "account_size"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
 end

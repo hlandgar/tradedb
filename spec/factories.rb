@@ -28,6 +28,7 @@ FactoryGirl.define do
 		position 1
 		security_id 1
 		stop2 0
+		market_condition []
 
 	end
 

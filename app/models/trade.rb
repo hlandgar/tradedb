@@ -33,6 +33,10 @@ class Trade < ActiveRecord::Base
 		self.open = self.position != 0	
 	end
 
+	def self.get_market_condition
+		["Vert Up", "Vert Down", "Balance", "Early", "Mature"]
+	end
+
 	private
 
 	def set_nest(entry)
