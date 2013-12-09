@@ -42,4 +42,6 @@ class SecuritiesController < ApplicationController
 																				:currency, :tick_size, :tickval, :default_spread,
 																				:decimal_places, :sort_order)
 		end
+
+		
 end

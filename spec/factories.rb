@@ -26,7 +26,7 @@ FactoryGirl.define do
 		desc "long ES"
 		kelly 0.0
 		position 1
-		security_id 1
+		symbol "ES"
 		stop2 0
 		market_condition []
 

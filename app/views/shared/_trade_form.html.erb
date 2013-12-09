@@ -6,13 +6,14 @@
 	
 	<div class="form-horizontal">
 		<div class="control-group">
-			<%= f.label :security_id, "Symbol", class: "control-label" %>
+			<%= f.label :symbol, "Symbol", class: "control-label" %>
 			<div class="controls">
-			<%= f.select(:security_id, securities_option_list(current_user),{}, class: "span2", id:"my_select") %>
+			<%= f.select(:symbol, securities_option_list(current_user),{}, class: "span2", id:"my_select") %>
 			</div>
 		</div>
 
 		<input type="hidden" name="get_spread" id="get_spread" value="" />
+
 
 		<div class="control-group">
 			<%= f.label :fill, class: "control-label" %>
@@ -34,6 +35,7 @@
 				<%= f.text_field :stop, class: "input-small" %> 
 			</div>
 		</div>
+		<%= f.hidden_field :kelly, value: @kelly %>
 
 		<div class="control-group">
 			<%= f.label :targ1, "1st Target", class: "control-label" %>

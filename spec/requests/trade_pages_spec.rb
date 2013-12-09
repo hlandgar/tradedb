@@ -35,7 +35,7 @@ describe "TradePages" do
 		describe "with valid information" do
 			describe "Calculate test" do
 				before do
-					select "ES", from: "trade[security_id]"
+					select "ES", from: "trade[symbol]"
 				  fill_in "trade[fill]", with: "1777"
 				  fill_in "Stop", with: "1774"
 				  fill_in "1st Target", with: "1789"

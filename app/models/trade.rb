@@ -18,7 +18,7 @@ class Trade < ActiveRecord::Base
 
 	validates :user_id, presence: true, numericality: { only_integer: true }
 	validates :comments, length: { maximum: 199 }
-	validates :security_id, presence: true, numericality: { only_integer: true }
+	validates :symbol, presence: true
 	validates :prob1, presence: true, numericality: { greater_than: 0, less_than: 100 }
 	validates :fill, presence: true, numericality: { greater_than: 0 }
 	validates :stop, presence: true, numericality: { greater_than: 0 }

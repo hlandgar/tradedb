@@ -23,6 +23,7 @@ class QuotebasesController < ApplicationController
 
 	def edit
 		@quote = Quotebase.find(params[:id])
+		@description = @quote.description
 	end
 
 	def destroy
@@ -43,7 +44,10 @@ class QuotebasesController < ApplicationController
 	private
 
 	def quote_params
-		params.require(:quotebase).permit(:symbol, :yahoo_symbol)
+		params.require(:quotebase).permit(:symbol, :yahoo_symbol, :default, :description, :security_type, :currency,
+			:tick_size, :tickval, :default_spread, :decimal_places, :sort_order)
+			
+		
 	end
 
 	private

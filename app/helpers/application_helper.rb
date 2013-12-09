@@ -18,15 +18,15 @@ module ApplicationHelper
 
 	
 	def securities_option_list(user)
-		user.securities.map { |x| [x.symbol, x.id] }
+		all_secs.map { |x| [x.symbol, x.symbol] }
 	end
 
-	def kelly(security_id, stop, fill, target1, target2, prob1, prob2, 
+	def kelly(security_symbol, stop, fill, target1, target2, prob1, prob2, 
 																			options = { stop2: fill, sellpct: 0.5, spread: 1 } )
 
 		risk = (fill - stop).abs
 		spread = options[:spread]
-		house_take = house(risk,security_id, spread)
+		house_take = house(risk,security_symbol, spread)
 
 		if prob2 == 0
 			
@@ -71,10 +71,10 @@ module ApplicationHelper
 		end
 	end
 
-	def getbestkelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2, spread: spread)
+	def getbestkelly(security_symbol, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2, spread: spread)
 		results = []
 		0.step(1,0.10).each do |sellpct|
-			results << [sellpct, kelly(security_id,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2,
+			results << [sellpct, kelly(security_symbol,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2,
 			 												sellpct: sellpct, spread: spread)[0] ]
 		end
 		results.max_by(&:last)[0]
@@ -103,20 +103,20 @@ module ApplicationHelper
 		return [p1_new, p2_new]
 	end
 
-	def house(risk, security_id, spread)
-		security = current_user.securities.find(security_id)
-		tick_cost = security.tickval * spread
-		tick_size = security.tick_size
+	def house(risk, security_symbol, spread)
+		security = find_sec(security_symbol)
+		tick_cost = security.tickval.to_f * spread
+		tick_size = security.tick_size.to_f
 		commiss = 5.0
 		risk_in_ticks = risk / tick_size
-		return (tick_cost + commiss) / (risk_in_ticks * security.tickval)
+		return (tick_cost + commiss) / (risk_in_ticks * security.tickval.to_f)
 		
 	end
 
-	def get_alloc(kelly, account, security_id, risk, fraction)
-		security = current_user.securities.find(security_id)
-		risk_in_ticks = risk/security.tick_size
-		risk_per_contract = risk_in_ticks * security.tickval
+	def get_alloc(kelly, account, security_symbol, risk, fraction)
+		security = find_sec(security_symbol)
+		risk_in_ticks = risk/security.tick_size.to_f
+		risk_per_contract = risk_in_ticks * security.tickval.to_f
 		return ( (kelly/fraction * account) /risk_per_contract)
 
 		
@@ -128,8 +128,8 @@ module ApplicationHelper
 	end
 
 	def get_spread(symbol)
-		s = current_user.securities.find_by_symbol(symbol)
-		tick = s.tick_size
+		s = find_sec(symbol)
+		tick = s.tick_size.to_f
 		quote = Security.quote(symbol)
 
 		if quote == "no quote" or (quote.ask_realtime == quote.bid_realtime)
@@ -137,5 +137,13 @@ module ApplicationHelper
 		else 
 			((quote.ask_realtime - quote.bid_realtime)	/ tick	).round(0)
 		end
+	end
+
+	def all_secs
+		(Quotebase.default_securities + current_user.securities).uniq(&:symbol)
+	end
+
+	def find_sec(symbol)
+		all_secs.select {|i| i.symbol == symbol }.first
 	end
 end

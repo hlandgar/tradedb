@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131208043503) do
+ActiveRecord::Schema.define(version: 20131209173955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "hstore"
 
   create_table "entries", force: true do |t|
     t.datetime "entrytime"
@@ -32,6 +33,7 @@ ActiveRecord::Schema.define(version: 20131208043503) do
     t.string   "yahoo_symbol"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.hstore   "properties",   default: {}, null: false
   end
 
   create_table "securities", force: true do |t|
@@ -72,10 +74,11 @@ ActiveRecord::Schema.define(version: 20131208043503) do
     t.boolean  "second_target"
     t.float    "sellpct"
     t.text     "market_condition", array: true
+    t.string   "symbol"
   end
 
   add_index "trades", ["market_condition"], name: "index_trades_on_market_condition", using: :gin
-  add_index "trades", ["security_id"], name: "index_trades_on_security_id", using: :btree
+  add_index "trades", ["symbol"], name: "index_trades_on_symbol", using: :btree
   add_index "trades", ["user_id", "created_at"], name: "index_trades_on_user_id_and_created_at", using: :btree
 
   create_table "users", force: true do |t|

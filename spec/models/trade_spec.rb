@@ -4,7 +4,7 @@ describe Trade do
   
   let(:user) { FactoryGirl.create(:user) }
   before { @trade = user.trades.build(comments: "first trade", open: true, pl:0, fill:1780, stop:1775,
-            targ1:1790, prob1:0.50, desc: "long 1 ES", security_id: 1, market_condition: ["Balance"]) }
+            targ1:1790, prob1:0.50, desc: "long 1 ES", symbol: "ES", market_condition: ["Balance"]) }
 
   subject { @trade }
 
@@ -23,7 +23,7 @@ describe Trade do
   it { should respond_to(:kelly) }
   it { should respond_to(:open) }
   it { should respond_to(:position) }
-  it { should respond_to(:security_id) }
+  it { should respond_to(:symbol) }
   it { should respond_to(:stop2) }
   it { should respond_to(:second_target) }
   it { should respond_to(:sellpct) }
@@ -55,8 +55,8 @@ describe Trade do
     it { should_not be_valid }
   end
 
-  describe "when security_id is not present" do
-    before { @trade.security_id = nil }
+  describe "when symbol is not present" do
+    before { @trade.symbol = nil }
     it { should_not be_valid }
   end
 

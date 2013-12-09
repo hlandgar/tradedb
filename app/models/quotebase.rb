@@ -8,12 +8,19 @@ class Quotebase < ActiveRecord::Base
 	cattr_accessor :q_table
 	@@q_table = {}
 
+	store_accessor :properties, :default, :security_type, :description, :currency, :tick_size, :tickval, :sort_order,
+															:default_spread, :decimal_places
+
 
 	def self.quote(symbol, options= {} )
 		:reload_table if options[:reload]
 
 		@@q_table[symbol]
 		
+	end
+
+	def self.default_securities
+		quotes = Quotebase.where("properties-> 'default' = '1'" )
 	end
 
 	
@@ -35,6 +42,14 @@ class Quotebase < ActiveRecord::Base
 		end
 
 
+	end
+
+	def default
+		if %w{1 0}.include? super
+			super == '1' ? true : false
+		else
+			super
+		end
 	end
 
 end

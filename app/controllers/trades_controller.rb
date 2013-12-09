@@ -16,7 +16,7 @@ class TradesController < ApplicationController
 				if @trade.valid?
 					
 
-					security_id = @trade.security_id
+					security_symbol = @trade.symbol
 					fill = @trade.fill
 					stop = @trade.stop 
 					targ1 = @trade.targ1 
@@ -40,18 +40,18 @@ class TradesController < ApplicationController
 					reward = (targ1 - fill).abs
 					prob2 = 0.0 if !second_target?
 					
-					@house = house(risk, security_id, spread)
+					@house = house(risk, security_symbol, spread)
 
 				
 					fraction = current_user.kelly_fraction
 					account_size = current_user.account_size
 
 
-					(@kelly, @edge) = kelly(security_id, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2, sellpct: sellpct, spread: spread )
+					(@kelly, @edge) = kelly(security_symbol, stop, fill, targ1, targ2, prob1, prob2, stop2: stop2, sellpct: sellpct, spread: spread )
 
-					@best_sellpct = getbestkelly(security_id,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2, spread: spread).round(3) * 100 if prob2 > 0.0
+					@best_sellpct = getbestkelly(security_symbol,stop,fill,targ1,targ2,prob1,prob2,stop2: stop2, spread: spread).round(3) * 100 if prob2 > 0.0
 
-					@alloc = get_alloc(@kelly, account_size, security_id, risk, fraction).round(2)
+					@alloc = get_alloc(@kelly, account_size, security_symbol, risk, fraction).round(2)
 
 					@alloc = "no trade" if @alloc < 1.0
 
@@ -62,7 +62,7 @@ class TradesController < ApplicationController
 					
 
 					@quantity = @alloc.round(0) unless @alloc == "no trade"
-					@desc = make_desc(fill,stop,security_id,@quantity)
+					@desc = make_desc(fill,stop,security_symbol,@quantity)
 
 
 					@kelly *= 100
@@ -82,7 +82,7 @@ class TradesController < ApplicationController
 					redirect_to root_url
 				else
 					
-					@spread = get_spread(current_user.securities.find(@trade.security_id).symbol) if params[:get_spread] == 'get_spread'
+					@spread = get_spread(@trade.symbol) if params[:get_spread] == 'get_spread'
 					@get_spread = ""					
 					render 'static_pages/home'
 				end	
@@ -96,7 +96,7 @@ class TradesController < ApplicationController
 	private
 
 		def trade_params
-			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments,
+			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments, :symbol,
 												:security_id, :stop2, :commit, :second_target, :sellpct, :pass, :kelly, :get_spread, :spread,
 												 :market_condition => [],
 												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id] )

@@ -8,6 +8,17 @@ describe Quotebase do
 
   it { should respond_to :symbol }
   it { should respond_to :yahoo_symbol }
+  it { should respond_to :default }
+  it { should respond_to :security_type }
+  it { should respond_to :description }
+  it { should respond_to :currency }
+  it { should respond_to :tick_size }
+  it { should respond_to :tickval }
+  it { should respond_to :sort_order }
+  it { should respond_to :default_spread }
+  it { should respond_to :decimal_places }
+
+
 
   it { should be_valid }
 
