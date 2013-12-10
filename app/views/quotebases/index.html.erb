@@ -1,6 +1,9 @@
 <%= provide(:title, "Quotebase") %>
 <h1>Quote conversion table</h1>
 <div class="row">
+	<div span2>
+		<h2><%= link_to "New Security", new_quotebasis_path %></h2>
+	</div>
 	<div span10>
 		<% if @quotes.any?  %>
 			<%= render partial: "quotebase", collection: @quotes, as: :q %>
