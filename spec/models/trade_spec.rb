@@ -21,6 +21,7 @@ describe Trade do
   it { should respond_to(:prob2) }
   it { should respond_to(:desc) }
   it { should respond_to(:kelly) }
+  it { should respond_to(:edge) }
   it { should respond_to(:open) }
   it { should respond_to(:position) }
   it { should respond_to(:symbol) }

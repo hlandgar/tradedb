@@ -55,6 +55,14 @@ FactoryGirl.define do
 	factory :quotebase do
 		symbol "ES"
 		yahoo_symbol "ESZ13.CME"
+		default '1'
+		security_type "Future"
+		description "Emini S&P 500 Futures"
+		tick_size 0.25
+		tickval 12.50
+		default_spread 1
+		decimal_places 2
+		sort_order 10
 	end
 
 	

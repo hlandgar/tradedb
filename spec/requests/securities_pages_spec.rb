@@ -6,7 +6,7 @@ describe "SecuritiesPages" do
 
 	let(:user) { FactoryGirl.create(:user) }
 	before do
-		Quotebase.create!(symbol: "ES", yahoo_symbol: "ESZ13.CME")
+		FactoryGirl.create(:quotebase)
 		sign_in user
 
 	end

@@ -18,7 +18,7 @@ module ApplicationHelper
 
 	
 	def securities_option_list(user)
-		all_secs.map { |x| [x.symbol, x.symbol] }
+		all_secs.sort_by{|a| a.sort_order.to_i}.map { |x| [x.symbol, x.symbol] }
 	end
 
 	def kelly(security_symbol, stop, fill, target1, target2, prob1, prob2, 

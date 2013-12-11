@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131209173955) do
+ActiveRecord::Schema.define(version: 20131211043514) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -24,8 +24,10 @@ ActiveRecord::Schema.define(version: 20131209173955) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "price"
+    t.text     "tags",       array: true
   end
 
+  add_index "entries", ["tags"], name: "index_entries_on_tags", using: :gin
   add_index "entries", ["trade_id"], name: "index_entries_on_trade_id", using: :btree
 
   create_table "quotebases", force: true do |t|
@@ -67,7 +69,6 @@ ActiveRecord::Schema.define(version: 20131209173955) do
     t.float    "kelly"
     t.boolean  "open"
     t.integer  "position"
-    t.integer  "security_id"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.decimal  "stop2"
@@ -75,6 +76,7 @@ ActiveRecord::Schema.define(version: 20131209173955) do
     t.float    "sellpct"
     t.text     "market_condition", array: true
     t.string   "symbol"
+    t.float    "edge"
   end
 
   add_index "trades", ["market_condition"], name: "index_trades_on_market_condition", using: :gin

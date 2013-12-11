@@ -29,7 +29,7 @@ class Trade < ActiveRecord::Base
 	validates :sellpct, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_blank: true
 
 	def set_position		
-		self.position = self.entries.sum(:quantity) if self.entries.count > 0	
+		self.position = entries.map(&:quantity).sum	if entries.any?
 		self.open = self.position != 0	
 	end
 

@@ -2,7 +2,7 @@ require 'spec_helper'
 
 describe Quotebase do
   let(:user) { FactoryGirl.create(:user) }
-  before { @quote = Quotebase.new(symbol: "ES", yahoo_symbol: "ESZ13.CME") }
+  before { @quote = FactoryGirl.create(:quotebase) }
 
   subject { @quote }
 

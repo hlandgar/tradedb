@@ -1,5 +1,7 @@
 class Quotebase < ActiveRecord::Base
 
+
+
 	validates :symbol, presence: true, uniqueness: { case_sensitive: false }
 	validates :yahoo_symbol, presence: true
 
@@ -10,6 +12,10 @@ class Quotebase < ActiveRecord::Base
 
 	store_accessor :properties, :default, :security_type, :description, :currency, :tick_size, :tickval, :sort_order,
 															:default_spread, :decimal_places
+
+	
+
+	validates_numericality_of :tick_size, :tickval, :default_spread, :decimal_places
 
 
 	def self.quote(symbol, options= {} )
