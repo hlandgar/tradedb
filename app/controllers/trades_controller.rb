@@ -60,9 +60,9 @@ class TradesController < ApplicationController
 					@spread = spread
 					@sellpct = sellpct * 100
 					
-
-					@quantity = @alloc.round(0) unless @alloc == "no trade"
-					@desc = make_desc(fill,stop,security_symbol,@quantity)
+					sign = fill > stop ? 1 : -1
+					@quantity =  sign * (@alloc.round(0)) unless @alloc == "no trade"
+					@desc = make_desc(fill,stop,security_symbol)
 
 
 					@kelly *= 100
@@ -79,7 +79,7 @@ class TradesController < ApplicationController
 				
 				if params[:commit]== "Post" and @trade.save
 					flash[:success] = "Trade created"
-					redirect_to root_url
+					redirect_to current_user
 				else
 					
 					@spread = get_spread(@trade.symbol) if params[:get_spread] == 'get_spread'
@@ -90,7 +90,10 @@ class TradesController < ApplicationController
 		end
 
 
-	def destroy		
+	def destroy
+		Trade.find(params[:id]).destroy
+		flash[:success] = "Trade deleted"
+		redirect_to current_user		
 	end
 
 	private
@@ -102,11 +105,7 @@ class TradesController < ApplicationController
 												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id] )
 		end
 
-		def calculate_params
-			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :security_id, :commit,
-																				 :second_target, :sellpct, :spread)
-		end
-
+		
 		def second_target?
 			@trade.second_target == true
 		end

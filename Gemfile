@@ -17,6 +17,7 @@ group :development, :test do
   gem 'spork-rails'
   gem 'guard-spork'
   gem 'childprocess'
+  gem "pry", "~> 0.9.12.4"
 end
 
 group :test do

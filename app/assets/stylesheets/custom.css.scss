@@ -140,7 +140,9 @@ input {
 	height: auto !important;
 }
 
-
+.table th.text-right, .table td.text-right {
+	text-align: right;
+}
 
 #error_explanation {
 	color: #f00;

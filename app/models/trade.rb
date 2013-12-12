@@ -1,4 +1,5 @@
 class Trade < ActiveRecord::Base
+
 	
 	belongs_to :user
 	has_many :entries, dependent: :destroy, before_add: :set_nest
@@ -6,6 +7,7 @@ class Trade < ActiveRecord::Base
 	accepts_nested_attributes_for :entries
 
 	before_save :set_position
+
 
 	attr_accessor :spread
 
@@ -37,10 +39,47 @@ class Trade < ActiveRecord::Base
 		["Vert Up", "Vert Down", "Balance", "Early", "Mature"]
 	end
 
+	def avg_price
+
+		self.entries.inject(0.0){ |prod, e| e.quantity * e.price }  / self.position
+		
+	end
+
+	def current_price
+		quote = Security.quote(self.symbol)
+		self.position > 0 ? quote.bid_realtime : quote.ask_realtime
+	end
+
+	def open_pl
+		try(security = find_sec(self.symbol))
+
+		self.pl = self.position * security.tickval.to_f * (current_price - avg_price) / security.tick_size.to_f
+
+	
+	end
+	
+	
+	
 	private
+
+	def l_or_s
+		if self.open
+			self.position > 0 ? 1.0 : -1.0
+		else
+			0.0
+		end 		
+	end
 
 	def set_nest(entry)
 		entry.trade ||= self
+	end
+
+	def all_secs
+		(Quotebase.default_securities + User.find(self.user_id).securities).uniq(&:symbol)
+	end
+
+	def find_sec(symbol)
+		all_secs.select {|i| i.symbol == symbol }.first
 	end
 
 end

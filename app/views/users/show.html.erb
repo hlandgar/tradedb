@@ -11,14 +11,18 @@
 	<div class="span10">
 		<% if @user.trades.any? %>
 			<h3>Trades (<%= @user.trades.count %>)</h3>
-			<table class="trades table">
+			<table class="trades table table-striped">
 				<thead>
 					<th>Date</th>
 					<th>Position</th>
+					<th>Symbol</th>
+					<th>Avg Fill</th>
+					<th>Current Price</th>
 					<th>Description</th>
+					<th>Open Profit/Loss</th>
 
 				</thead>
-				<%= render @trades %>
+					<%= render @user.trades %>
 			</table>
 			<%= will_paginate @trades %>
 		<% end %>

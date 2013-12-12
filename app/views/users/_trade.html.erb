@@ -3,8 +3,7 @@
 	<td class="timestamp"><%= trade.created_at.strftime('%m/%d/%Y %I:%M%p') %> </td>
 	<td><%= trade.position %></td>
 	<td><%= trade.symbol %></td>
-	<td><%= trade.avg_price %></td>
-	<td><%= trade.current_price %></td>
+	<td><%= avg_price(trade) %></td>
 	<td class="comments"><%= trade.desc %></td>
-	<td class="text-right"><%= number_to_currency trade.open_pl %></td>
+	<td><%= open_pl(trade) %></td>
 </tr>

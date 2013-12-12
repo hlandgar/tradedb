@@ -10,17 +10,31 @@ module UsersHelper
 		
 	end
 
-	def long_or_short(fill,stop)
-		fill>stop ? "Long " : "Short "
+	def avg_price(trade)
+		trade.avg_price
 	end
 
-	def make_desc(fill,stop,sym, quantity)
+	def open_pl(trade)
+		trade.open_pl
+	end
+
+
+
+
+
+
+
+
+
+	def make_desc(fill,stop,sym)
 		desc = find_sec(sym).description
-		long_or_short(fill,stop) + "#{quantity} " + desc
+		long_or_short(fill,stop) + " " + desc
 	end
 
-
-
+	private
+		def long_or_short(fill,stop)
+			fill>stop ? "Long " : "Short "
+		end
 end
 
 	
