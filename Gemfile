@@ -18,6 +18,8 @@ group :development, :test do
   gem 'guard-spork'
   gem 'childprocess'
   gem "pry", "~> 0.9.12.4"
+  gem "better_errors"
+  gem 'binding_of_caller'
 end
 
 group :test do

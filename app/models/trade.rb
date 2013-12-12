@@ -6,7 +6,7 @@ class Trade < ActiveRecord::Base
 
 	accepts_nested_attributes_for :entries
 
-	before_save :set_position
+	before_save :set_position, :open_pl
 
 
 	attr_accessor :spread
