@@ -4,9 +4,10 @@ class Trade < ActiveRecord::Base
 	belongs_to :user
 	has_many :entries, dependent: :destroy, before_add: :set_nest
 
-	accepts_nested_attributes_for :entries
+	accepts_nested_attributes_for :entries, allow_destroy: true
 
 	before_save :set_position, :open_pl
+	before_update :set_position, :open_pl
 
 
 	attr_accessor :spread
@@ -41,17 +42,19 @@ class Trade < ActiveRecord::Base
 
 	def avg_price
 
-		self.entries.inject(0.0){ |prod, e| e.quantity * e.price }  / self.position
+		self.entries.inject(0.0){ |prod, e| prod + (e.quantity * e.price) }  / self.position
 		
 	end
 
 	def current_price
 		quote = Security.quote(self.symbol)
-		self.position > 0 ? quote.bid_realtime : quote.ask_realtime
+		self.position > 0 ? quote.bid_realtime : quote.ask_realtime if quote != "no quote"
 	end
 
 	def open_pl
 		try(security = find_sec(self.symbol))
+
+		return 0.0 if current_price.nil? or current_price == "no quote"
 
 		self.pl = self.position * security.tickval.to_f * (current_price - avg_price) / security.tick_size.to_f
 

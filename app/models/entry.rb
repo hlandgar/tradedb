@@ -18,6 +18,7 @@ private
 		self.trade.pass == false
 		
 	end
+end
 	
 
 
@@ -27,4 +28,4 @@ private
 
 
 
-end
+

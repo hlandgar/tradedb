@@ -2,10 +2,11 @@ Tradedb::Application.routes.draw do
 
   resources :users do
     resources :securities
+ 
   end
 
   resources :sessions, only: [:new, :create, :destroy]
-  resources :trades, only: [:create, :destroy]
+  resources :trades, only: [:edit, :update, :create, :destroy]
   resources :quotebases
   
   root 'static_pages#home'

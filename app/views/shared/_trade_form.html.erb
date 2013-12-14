@@ -111,8 +111,8 @@
 			<thead>
 				<tr>
 					<th>R/R</th>					
-					<th>Egde</th>
-					<th>Kelly</th>
+					<th>Edge</th>
+					<th>Kelly Criterion</th>
 					<th>Transact Cost</th>
 					<th>Allocation</th>
 				</tr>
@@ -168,7 +168,7 @@
     	<%= e.label :price %>
     	<%= e.text_field :price, class: "input-small", value: @price %>
     	
-    <% end -%>
+    <% end %>
 
     <%= f.label :desc, "Descripton" %>
     <%= f.text_field :desc, class: "span7", value: @desc %>
@@ -176,16 +176,16 @@
     <%= f.label :comments %>
     <%= f.text_area :comments, class: "span10" %>
 
-    <div class="control-group checkbox">
-    	<%= f.label :market_condition %>
-      <div class="controls">
-      	<%= f.collection_check_boxes :market_condition, Trade.get_market_condition , :to_s, :to_s, item_wrapper_class: "checkbox-inline" %>
-      </div>
-    </div>
+    <div class="checkbox">  
+	   <%= f.label :market_condition %>  
+	   <%= f.collection_check_boxes :market_condition, Trade.get_market_condition, :to_s, :to_s do |b| %>
+	   <%= b.label(class: "checkbox inline") {b.check_box + b.text }  %>
+	   <% end %>      
+ 		</div>
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal"
-    aria-hidden="true">Close</button>
+    aria-hidden="true">Dismiss</button>
     <%= f.submit "Post", class: "btn btn-primary" %>
   </div>
 </div>

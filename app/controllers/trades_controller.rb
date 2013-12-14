@@ -3,6 +3,21 @@ class TradesController < ApplicationController
 	include UsersHelper
 	before_action :signed_in_user
 
+	def edit
+		@trade = current_user.trades.find(params[:id])
+		@entries = @trade.entries
+	end
+
+	def update
+		@trade = current_user.trades.find(params[:id])
+		if @trade.update(trade_params)
+			flash[:success] = "Trade Updated"
+			render 'edit'
+		else
+			render 'edit'
+		end
+	end
+
 	def create
 		@trade = current_user.trades.build(trade_params)
 		@trade.pass = false
@@ -102,7 +117,7 @@ class TradesController < ApplicationController
 			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments, :symbol, :edge,
 												:security_id, :stop2, :commit, :second_target, :sellpct, :pass, :kelly, :get_spread, :spread,
 												 :market_condition => [],
-												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id] )
+												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id, :_destroy] )
 		end
 
 		

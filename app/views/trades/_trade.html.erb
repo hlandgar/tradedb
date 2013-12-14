@@ -5,6 +5,10 @@
 	<td><%= trade.symbol %></td>
 	<td><%= trade.avg_price %></td>
 	<td><%= trade.current_price %></td>
-	<td class="comments"><%= trade.desc %></td>
-	<td class="text-right"><%= number_to_currency trade.open_pl %></td>
+	<td class="comments"><%= link_to trade.desc, edit_trade_path(trade) %></td>
+	<td class="text-right"><%= number_to_currency trade.open_pl %>
+		<%= link_to "delete", trade, method: :delete,
+																		data: { confirm: "You sure?"} %>
+	</td>
+
 </tr>
