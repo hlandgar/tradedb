@@ -6,13 +6,15 @@ class TradesController < ApplicationController
 	def edit
 		@trade = current_user.trades.find(params[:id])
 		@entries = @trade.entries
+		@trade.pass = false
 	end
 
 	def update
 		@trade = current_user.trades.find(params[:id])
+		@trade.pass = false
 		if @trade.update(trade_params)
 			flash[:success] = "Trade Updated"
-			render 'edit'
+			redirect_to current_user
 		else
 			render 'edit'
 		end

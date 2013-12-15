@@ -8,5 +8,7 @@
 	<%= f.label :price %>
 	<%= f.text_field :price, class: "input-small"%>	
 	<%= f.hidden_field :_destroy %>
-	<%= link_to "remove", '#', class: "remove_fields" %>
+	<% if f.object.persisted? %>
+		<%= link_to "remove", '#', class: "remove_fields" %>
+	<% end %>
 </fieldset>

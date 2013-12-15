@@ -5,14 +5,18 @@ class Trade < ActiveRecord::Base
 	has_many :entries, dependent: :destroy, before_add: :set_nest
 
 	accepts_nested_attributes_for :entries, allow_destroy: true
+	validates_associated :entries
+
 
 	before_save :set_position, :open_pl
-	before_update :set_position, :open_pl
+
 
 
 	attr_accessor :spread
 
 	default_scope -> { order('created_at DESC')}
+	scope :open, -> { where( open: true ) }
+	scope :closed, -> { where( open: false ) }
 
 	attr_accessor :pass
 
@@ -31,9 +35,11 @@ class Trade < ActiveRecord::Base
 	validates :stop2, numericality: { greater_than_or_equal_to: 0 }, allow_blank: true
 	validates :sellpct, numericality: { greater_than_or_equal_to: 0, less_than_or_equal_to: 100 }, allow_blank: true
 
-	def set_position		
+	def set_position	
+
 		self.position = entries.map(&:quantity).sum	if entries.any?
 		self.open = self.position != 0	
+		return true
 	end
 
 	def self.get_market_condition
@@ -41,24 +47,55 @@ class Trade < ActiveRecord::Base
 	end
 
 	def avg_price
-
-		self.entries.inject(0.0){ |prod, e| prod + (e.quantity * e.price) }  / self.position
+		if self.position != 0
+			self.entries.inject(0.0){ |prod, e| prod + (e.quantity * e.price) }  / self.position
+		else
+			self.entries.first.price
+		end
 		
 	end
 
 	def current_price
-		quote = Security.quote(self.symbol)
-		self.position > 0 ? quote.bid_realtime : quote.ask_realtime if quote != "no quote"
+		if (quote = Security.quote(self.symbol)) != "no quote"
+			if self.position > 0
+				quote.bid_realtime
+			elsif 	self.position < 0
+					quote.ask_realtime
+			else
+				quote.last_trade_price_only
+			end
+		else
+			"no quote"
+		end
 	end
 
 	def open_pl
 		try(security = find_sec(self.symbol))
 
-		return 0.0 if current_price.nil? or current_price == "no quote"
+		if open?
+			return 0.0 if current_price.nil? or current_price == "no quote"
+			self.pl = self.position * security.tickval.to_f * (current_price - avg_price) / security.tick_size.to_f
+		else
 
-		self.pl = self.position * security.tickval.to_f * (current_price - avg_price) / security.tick_size.to_f
+			self.pl = security.tickval.to_f * 
+				self.entries.inject(0.0){|sum, e| sum + (-e.quantity * e.price) } / security.tick_size.to_f				
+		end
+	end
 
-	
+	def closed?
+		self.open == false
+	end
+
+	def open?
+		self.open == true
+	end
+
+	def self.open_eq(user)
+		user.trades.open.sum(:pl).to_f
+	end
+
+	def self.closed_eq(user)
+		user.trades.closed.sum(:pl).to_f
 	end
 	
 	

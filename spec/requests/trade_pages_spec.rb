@@ -78,6 +78,14 @@ describe "TradePages" do
 				before { click_link "Long Emini S&P Future" }
 
 				it { should have_content("Edit Trade")}
+
+				describe "with invalid information" do
+					before do
+						click_link "Add New Entry" 
+						click_button "Update"
+					end
+					it { should have_content("error")}
+				end
 			end
 
 	end

@@ -22,7 +22,7 @@ describe Entry do
 
   its(:trade) { should eq trade }
 
-  its(:run_validation) { should eq true }
+  its(:run_validation?) { should eq true }
 
   it { should be_valid }
 

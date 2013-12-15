@@ -167,6 +167,15 @@ input {
 	clear: none;
 }
 
+.form-inline .field_with_errors {
+	margin: 0;
+}
+
+.form-inline .field_with_errors:before, .form-inline .field_with_errors::after{
+	display: block;
+	clear: none;
+}
+
 #tradeModal {
 	
 	width: 900px;
