@@ -12,4 +12,4 @@ jQuery ->
 
 	$('form').find("a.remove_fields:first").hide()
 
-	$('#entries').validate()
+	

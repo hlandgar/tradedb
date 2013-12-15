@@ -1,6 +1,6 @@
 <fieldset class="form-inline">
   <%= f.label :entrytime, "Timestamp" %>  			  	
-  <%= f.datetime_local_field :entrytime, class: "span3 control-label", prompt: Time.now.strftime("%Y-%m-%dT%R")  %>
+  <%= f.datetime_local_field :entrytime, value: date_format(f.object.entrytime), class: "span3 control-label" %>
 
 	<%= f.label :quantity %>
 	<%= f.text_field :quantity, class: "span1" %>

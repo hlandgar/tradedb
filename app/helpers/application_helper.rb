@@ -155,4 +155,12 @@ module ApplicationHelper
 		end
 		link_to(name, '#', class: "add_fields", data: {id: id, fields: fields.gsub("\n", "")})
 	end
+
+	def date_format(date)
+		if date.nil?
+		  Time.zone.now.strftime("%Y-%m-%dT%R")
+		else
+			date.strftime('%Y-%m-%dT%T')
+		end
+	end
 end

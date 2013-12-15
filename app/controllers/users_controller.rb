@@ -11,7 +11,8 @@ class UsersController < ApplicationController
 
   def show
   	@user = User.find(params[:id])
-    @trades = @user.trades.paginate(page: params[:page])
+    @open_trades = @user.trades.open
+    @closed_trades = @user.trades.closed
   end
 
   def create

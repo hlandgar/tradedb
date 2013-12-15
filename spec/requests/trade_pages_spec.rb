@@ -64,29 +64,32 @@ describe "TradePages" do
 				it { should have_selector('td', "10.300%") }				
 			end			
 		end
-	end
+	
 
-	describe "editing a trade" do
-		before do	
-			sign_in user		
-			FactoryGirl.create(:trade, user: user, desc: "Long Emini S&P Future")
-			visit user_path(user)
-		end
-			it { should have_link("Long Emini S&P Future")}
+		describe "editing a trade" do
 
-			describe "edit a trade" do
-				before { click_link "Long Emini S&P Future" }
-
-				it { should have_content("Edit Trade")}
-
-				describe "with invalid information" do
-					before do
-						click_link "Add New Entry" 
-						click_button "Update"
-					end
-					it { should have_content("error")}
-				end
+			before do	
+				sign_in user		
+				FactoryGirl.create(:trade, user: user, desc: "Long Emini S&P Future") 
+				visit user_path(user)
+				
 			end
+				it { should have_link("Long Emini S&P Future")}
 
+				describe "edit a trade" do
+					before { click_link "Long Emini S&P Future" }
+
+					it { should have_content("Edit Trade")}
+
+					describe "with invalid information" do
+						before do
+							click_link "Add New Entry" 
+							click_button "Update"
+						end
+						it { should have_content('error') }
+					end
+				end
+
+		end
 	end
 end

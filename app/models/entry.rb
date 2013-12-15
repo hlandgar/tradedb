@@ -8,17 +8,18 @@ class Entry < ActiveRecord::Base
 
 	validates_presence_of :trade
 
-	validates :price, presence: true, numericality: { greater_than: 0 }, if: :run_validation?
-	validates :quantity, presence: true, numericality: { only_integer: true, other_than: 0 }, if: :run_validation?
-	validates :entrytime, presence: true, if: :run_validation?
-	
+	with_options if: :run_validation? do |check|
+		check.validates :price, presence: true, numericality: { greater_than: 0 }
+		check.validates :quantity, presence: true, numericality: { only_integer: true, other_than: 0 }
+		check.validates :entrytime, presence: true
+	end
 
 private
 
 	def run_validation?
 
-		self.trade.pass == false
-		
+	(self.trade.pass == false or self.trade.pass.nil?) ? true : false
+
 	end
 
 	def save_parent

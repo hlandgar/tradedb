@@ -9,8 +9,14 @@
 		</section>
 	</aside>
 	<div class="span10">
-		<% if @user.trades.any? %>
-			<h3>Trades (<%= @user.trades.count %>)</h3>
+		<h3>Summary</h3>
+		Open P&L: <%= number_to_currency(Trade.open_eq(current_user)) %> <br/>
+		Closed P&L: <%= number_to_currency(Trade.closed_eq(current_user)) %>
+
+	</div>
+	<div class="span10">
+		<% if @open_trades.any? %>
+			<h3>Open Trades (<%= @open_trades.count %>)</h3>
 			<table class="trades table table-striped">
 				<thead>
 					<th>Date</th>
@@ -22,9 +28,30 @@
 					<th>Open Profit/Loss</th>
 
 				</thead>
-					<%= render @user.trades %>
+					<%= render @open_trades %>
 			</table>
-			<%= will_paginate @trades %>
+			
 		<% end %>
+
+
 	</div>
+
+	<div class="span10 offset2">
+		<% if @closed_trades.any? %>
+			<h3>Closed Trades (<%= @closed_trades.count %>)</h3>
+			<table class="trades table table-striped">
+				<thead>
+					<th>Date</th>
+					<th>Position</th>
+					<th>Symbol</th>
+					<th>Avg Fill</th>
+					<th>Current Price</th>
+					<th>Description</th>
+					<th>Open Profit/Loss</th>
+
+				</thead>
+					<%= render @closed_trades %>
+			</table>
+			
+		<% end %>
 </div>
