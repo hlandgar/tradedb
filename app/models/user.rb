@@ -1,6 +1,7 @@
 class User < ActiveRecord::Base
 	has_many :trades, dependent: :destroy
 	has_many :securities, dependent: :destroy
+	has_many :categories, dependent: :destroy
 
 	
 

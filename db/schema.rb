@@ -11,11 +11,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131211043514) do
+ActiveRecord::Schema.define(version: 20131216015517) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "hstore"
+
+  create_table "categories", force: true do |t|
+    t.string   "name"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "entries", force: true do |t|
     t.datetime "entrytime"
@@ -54,6 +61,13 @@ ActiveRecord::Schema.define(version: 20131211043514) do
   end
 
   add_index "securities", ["symbol"], name: "index_securities_on_symbol", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string   "name"
+    t.integer  "category_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "trades", force: true do |t|
     t.integer  "user_id"

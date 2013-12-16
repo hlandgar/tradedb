@@ -2,7 +2,7 @@ Tradedb::Application.routes.draw do
 
   resources :users do
     resources :securities
- 
+    resources :categories
   end
 
   resources :sessions, only: [:new, :create, :destroy]

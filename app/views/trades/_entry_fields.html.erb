@@ -3,10 +3,10 @@
   <%= f.datetime_local_field :entrytime, value: date_format(f.object.entrytime), class: "span3 control-label" %>
 
 	<%= f.label :quantity %>
-	<%= f.text_field :quantity, class: "span1" %>
+	<%= f.number_field :quantity, class: "span1" %>
 
 	<%= f.label :price %>
-	<%= f.text_field :price, class: "input-small"%>	
+	<%= f.number_field :price, class: "input-small", step: step(@trade.symbol)%>	
 	<%= f.hidden_field :_destroy %>
 	<% if f.object.persisted? %>
 		<%= link_to "remove", '#', class: "remove_fields" %>

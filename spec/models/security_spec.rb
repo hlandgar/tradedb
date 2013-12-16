@@ -68,7 +68,7 @@ describe Security do
   	it { should_not be_valid }
   end
 
-  describe "with sort_order that is no an integer and greater than 0" do
+  describe "with sort_order that is not an integer and greater than 0" do
   	before { @security.sort_order = -24 }
   	it { should_not be_valid }
   end

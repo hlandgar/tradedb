@@ -163,4 +163,8 @@ module ApplicationHelper
 			date.strftime('%Y-%m-%dT%T')
 		end
 	end
+
+	def step(symbol)
+		find_sec(symbol).tick_size
+	end
 end

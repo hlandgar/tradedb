@@ -6,6 +6,7 @@ class StaticPagesController < ApplicationController
       @entry = @trade.entries.build
       @spread = get_spread("ES")
       @sellpct = 50
+      @step = 0.25
  
   
     end

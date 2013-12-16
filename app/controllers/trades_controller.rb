@@ -42,6 +42,7 @@ class TradesController < ApplicationController
 					targ2 = @trade.targ2 ||= 0.0
 					stop2 = @trade.stop2 ||= fill
 					spread = @trade.spread.to_i
+					@step = step(security_symbol)
 
 					stop2 = fill if stop2 == 0.0
 					second_target = @trade.second_target || false
@@ -86,6 +87,7 @@ class TradesController < ApplicationController
 					@edge *= 100
 					@house *=100
 
+
 					@rr = (reward/risk).round(1)
 				end
 
@@ -100,7 +102,8 @@ class TradesController < ApplicationController
 				else
 					
 					@spread = get_spread(@trade.symbol) if params[:get_spread] == 'get_spread'
-					@get_spread = ""					
+					@get_spread = ""
+					@step = step(@trade.symbol)					
 					render 'static_pages/home'
 				end	
 			end				

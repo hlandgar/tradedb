@@ -18,21 +18,21 @@
 		<div class="control-group">
 			<%= f.label :fill, class: "control-label" %>
 			<div class="controls">
-				<%= f.text_field  :fill , class: "input-small", id: "fill" %>
+				<%= f.number_field  :fill , class: "input-small", id: "fill", step: @step, min: 0 %>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<%= f.label :spread, "Bid/Ask Spread", class: "control-label" %>
 			<div class="controls">
-				<%= f.text_field  :spread , value: @spread, class: "span1", id: "fill" %>
+				<%= f.number_field  :spread , value: @spread, class: "span1", id: "fill", min: 0 %>
 			</div>
 		</div>
 
 		<div class="control-group">
 			<%= f.label :stop, class: "control-label" %>
 			<div class="controls">
-				<%= f.text_field :stop, class: "input-small" %> 
+				<%= f.number_field :stop, class: "input-small", step: @step, min: 0 %> 
 			</div>
 		</div>
 		<%= f.hidden_field :kelly, value: @kelly %>
@@ -41,7 +41,7 @@
 		<div class="control-group">
 			<%= f.label :targ1, "1st Target", class: "control-label" %>
 			<div class="controls">
-				<%= f.text_field :targ1, class: "input-small"  %>
+				<%= f.number_field :targ1, class: "input-small", step: @step, min:0  %>
 			</div>
 		</div>
 
@@ -49,7 +49,7 @@
 			<%= f.label :prob1, "Probability of reaching 1st Target", class: "control-label" %>								
 				<div class="controls">
 					<div class="input-append">	
-					<%= f.text_field :prob1, class: "span1", id: "appendedInput", type: "text" %>
+					<%= f.number_field :prob1, class: "span1", id: "appendedInput", type: "number", min:0, max: 100 %>
 						<span class="add-on">%</span>
 					</div>
 				</div>
@@ -68,7 +68,7 @@
 		<div class="control-group">
 				<%= f.label :targ2, "2nd Target", class: "control-label" %>
 				<div class="controls">
-					<%= f.text_field :targ2, class: "input-small" %>
+					<%= f.number_field :targ2, class: "input-small", step: @step, min:0  %>
 				</div>
 			</div>
 
@@ -78,7 +78,7 @@
 				<%= f.label :prob2, "Probability of reaching 2nd Target", class: "control-label" %>
 				<div class="controls">
 					<div class="input-append">
-						<%= f.text_field :prob2, class: "span1", id: "appendedInput", type: "text" %>
+						<%= f.number_field :prob2, class: "span1", id: "appendedInput", type: "text" %>
 							<span class="add-on">%</span>						
 					</div>
 					<span class="help-inline">This must be less than the probability of reachiing target 1</span>
@@ -88,7 +88,7 @@
 			<div class="control-group">
 				<%= f.label :stop2, "trailing stop after Target 1 reached", class: "control-label" %>
 				<div class="controls">
-					<%= f.text_field :stop2, class: "input-small" %>
+					<%= f.number_field :stop2, class: "input-small" , step: @step %>
 					<span class="help-inline">Defaults to breakeven if left blank</span>
 				</div>
 	
@@ -97,7 +97,8 @@
 				<%= f.label :sellpct, "Portion to sell at Target 1", class: "control-label" %>
 				<div class="controls">					
 					<div class="input-append">
-						<%= f.text_field :sellpct, value: @sellpct, class: "span1", id: "appendedInput", type: "text" %>
+						<%= f.number_field :sellpct, value: @sellpct, class: "span1", id: "appendedInput", type: "number",
+						min: 0, max: 100 %>
 						<span class="add-on">%</span>
 					</div>			
 						<% if !@best_sellpct.blank? %>
@@ -163,10 +164,10 @@
     	</div>
 
     	<%= e.label :quantity %>
-    	<%= e.text_field :quantity, class: "input-small", value: @quantity %>
+    	<%= e.number_field :quantity, class: "input-small", value: @quantity %>
 
     	<%= e.label :price %>
-    	<%= e.text_field :price, class: "input-small", value: @price %>
+    	<%= e.number_field :price, class: "input-small", value: @price, step: @step, min:0 %>
     	
     <% end %>
 

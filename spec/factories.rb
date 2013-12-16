@@ -45,6 +45,16 @@ FactoryGirl.define do
 		user
 	end
 
+	factory :category do
+		name "Setups"
+		user		
+	end
+
+	factory :tag do
+		name "Initiative trade at extreme"
+		category
+	end
+
 	factory :entry do
 		trade
 		quantity 10
