@@ -91,6 +91,9 @@ class Trade < ActiveRecord::Base
 	end
 
 	def self.open_eq(user)
+		user.trades.open.each do |trade|
+			trade.save		
+		end
 		user.trades.open.sum(:pl).to_f
 	end
 

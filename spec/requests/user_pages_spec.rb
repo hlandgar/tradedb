@@ -15,7 +15,10 @@ describe "UserPages" do
 
   describe "profile page" do
 	 	let(:user) { FactoryGirl.create(:user) }
-	 	before { visit user_path(user) }
+	 	before do 
+      sign_in user
+      visit user_path(user) 
+    end
 
 	 	it { should have_selector('h1', text: user.name) }
 	 	it { should have_title(user.name) }
@@ -165,9 +168,14 @@ describe "UserPages" do
   describe "profile page" do
     let(:user) { FactoryGirl.create(:user) }
     let!(:t1) { FactoryGirl.create(:trade, user: user, desc: "long ES") }
+    let!(:e1) { FactoryGirl.create(:entry, trade: t1) }
     let!(:t2) { FactoryGirl.create(:trade, user: user, desc: "long 6E") }
+    let!(:e2) { FactoryGirl.create(:entry, trade: t2) }
 
-    before { visit user_path(user) }
+    before do 
+      sign_in user
+      visit user_path(user) 
+    end
 
     it { should have_content(user.name) }
     it { should have_title( user.name) }

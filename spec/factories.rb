@@ -57,7 +57,7 @@ FactoryGirl.define do
 
 	factory :entry do
 		trade
-		quantity 10
+		quantity 1
 		entrytime "#{Time.now}"
 		price 1780.00
 	end
