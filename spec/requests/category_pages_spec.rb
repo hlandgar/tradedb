@@ -16,9 +16,9 @@ describe "CategoryPages" do
   			expect { click_button "Save" }.not_to change(Category, :count)
   		end
 
-  		describe "errpr messages" do
+  		describe "error messages" do
   			before { click_button "Save" }
-  			it { should have_content("error") }
+  			it { should have_css("div.alert-error") }
   		end
   	end
 

@@ -1,4 +1,4 @@
-class CatagoriesController < ApplicationController
+class CategoriesController < ApplicationController
   def new
   	@category = current_user.categories.build
   end
