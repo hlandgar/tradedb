@@ -10,6 +10,8 @@ gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate', '0.0.9'
 gem 'stock_quote'
 gem 'jquery-validation-rails'
+gem "pry", "~> 0.9.12.4"
+gem "pry-rails"
 
 
 group :development, :test do
@@ -19,7 +21,6 @@ group :development, :test do
   gem 'spork-rails'
   gem 'guard-spork'
   gem 'childprocess'
-  gem "pry", "~> 0.9.12.4"
   gem "better_errors"
   gem 'binding_of_caller'
 end
