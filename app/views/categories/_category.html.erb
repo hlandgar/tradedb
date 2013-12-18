@@ -1,0 +1,8 @@
+<li><%= link_to category.name, edit_user_category_path(current_user, category) %></li>
+<% if category.tags.any? %>
+	<ul>
+		<% category.tags.each do |tag| %>
+		<li><%= tag.name %></li>
+		<% end %>
+	</ul>
+<% end %>

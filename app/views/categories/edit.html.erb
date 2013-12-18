@@ -1,0 +1,22 @@
+<%= provide(:title, 'Edit Category') %>
+
+<h1>Update your Category</h1>
+
+<div class="row">
+	<div class="span6 offset3">
+		<%= form_for @category, url: user_category_path do |f| %>
+			
+			<fieldset class="field">
+				<%= render 'cat_fields', f: f %>
+			</fieldset>
+
+				<%= f.fields_for :tags do |builder| %>
+					<%= render 'tag_fields' , f: builder %>
+				<% end %>
+				<%= link_to_add_fields "Add Tag", f, :tags %>
+					
+			<%= f.submit "Save changes", class: "btn btn-large btn-primary" %>
+		<% end %>
+	</div>
+
+</div>

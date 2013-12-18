@@ -44,13 +44,16 @@
 					<th>Date</th>
 					<th>Position</th>
 					<th>Symbol</th>
-					<th>Avg Fill</th>
-					<th>Current Price</th>
+					<th>Fill</th>
+					
 					<th>Description</th>
 					<th>Open Profit/Loss</th>
 
 				</thead>
-					<%= render @closed_trades %>
+			
+					<%= render partial: '/trades/closed_trade', collection: @closed_trades, as: :trade %>
+				
+					
 			</table>
 			
 		<% end %>

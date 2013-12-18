@@ -1,10 +1,11 @@
 <tr>
 	
 	<td class="timestamp"><%= trade.entries.first.entrytime.strftime('%m/%d/%Y %I:%M%p') %> </td>
-	<td><%= trade.position %></td>
+	<td>Closed</td>
+
 	<td><%= link_to trade.symbol, edit_trade_path(trade) %></td>
-	<td><%= trade.avg_price %></td>
-	<td><%= trade.current_price %></td>
+	<td><%= trade.fill %></td>
+	
 	<td class="comments"><%= link_to trade.desc, edit_trade_path(trade) %></td>
 	<td class="text-right"><%= number_to_currency trade.open_pl %>
 		<%= link_to "delete", trade, method: :delete,

@@ -1,0 +1,22 @@
+<%= provide(:title, current_user.name) %>
+<h1>Category list for <%= current_user.name %></h1>
+<div class="row">
+	<aside class="span3">
+		<section>
+			<h1>
+				<%= gravatar_for current_user %>
+				<%= current_user.name %>
+			</h1>
+			<h2><%= link_to "New Category", new_user_category_path %></h2>
+		</section>
+	</aside>
+	<div class="span9">
+		<% if current_user.categories.any? %>
+			<h3>Categories (<%= current_user.categories.count %>)</h3>
+			
+					<%= render @categories %>
+				
+		<% end %>	
+			
+	</div>
+</div>

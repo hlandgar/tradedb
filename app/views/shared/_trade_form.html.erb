@@ -159,7 +159,7 @@
     	<div class="control-group">
     		<%= e.label :entrytime, "Entry timestamp" %>
     	  <div class="controls">
-    	  	<%= e.datetime_local_field :entrytime, value: Time.now.strftime("%Y-%m-%dT%R"), class: "span4 control-label"  %>
+    	  	<%= e.datetime_local_field :entrytime, value: Time.zone.now.strftime("%Y-%m-%dT%R"), class: "span4 control-label"  %>
     	  </div>
     	</div>
 
