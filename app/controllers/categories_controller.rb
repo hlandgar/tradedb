@@ -8,15 +8,14 @@ class CategoriesController < ApplicationController
 
 	def edit
 		@category = current_user.categories.find(params[:id])
-  	@category.tags.build
+
 		
 	end
 
   def new
   	@category = current_user.categories.build
-  	if @category.tags.empty?
-			@category.tags.build			
-		end
+ 	
+		
   end
 
   def create

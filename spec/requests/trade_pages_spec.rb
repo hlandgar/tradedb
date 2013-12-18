@@ -67,17 +67,17 @@ describe "TradePages" do
 	
 
 		describe "editing a trade" do
+			let(:trade) { FactoryGirl.create(:trade, user: user, symbol: "ES", pass: false)  }
 
 			before do	
-				sign_in user		
-				FactoryGirl.create(:trade, user: user, desc: "Long Emini S&P Future") 
+				FactoryGirl.create(:entry, trade: trade)
 				visit user_path(user)
 				
 			end
-				it { should have_link("Long Emini S&P Future")}
+				it { should have_link("ES")}
 
 				describe "edit a trade" do
-					before { click_link "Long Emini S&P Future" }
+					before { click_link "ES" }
 
 					it { should have_content("Edit Trade")}
 
@@ -87,6 +87,16 @@ describe "TradePages" do
 							click_button "Update"
 						end
 						it { should have_content('error') }
+					end
+
+					describe "with valid information" do
+						before do
+						  click_link "Add New Entry"
+						  fill_in "Quantity", with: 3
+						  fill_in "Price", with: 1750.00
+						  click_button "Update"
+						end
+						it { should have_content("Trade Updated")}
 					end
 				end
 

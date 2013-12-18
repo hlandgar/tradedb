@@ -24,7 +24,7 @@ describe Tag do
   end
 
   describe "with name that is too long" do
-  	before { @tag.name = "a" * 31 }
+  	before { @tag.name = "a" * 51 }
   	it { should_not be_valid }
   end
 
