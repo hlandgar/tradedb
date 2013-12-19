@@ -1,6 +1,25 @@
 require 'spec_helper'
 
 describe "TradePages" do
+	include Capybara::DSL
+
+	def check_form
+	  page.should have_no_css('form .fields input[id$=name]')
+	  click_link 'Add New Entry'
+	  page.should have_css('form .fields input[id$=name]', :count => 1)
+	  find('form .fields input[id$=name]').should be_visible
+	  find('form .fields input[id$=_destroy]').value.should == 'false'
+
+	  click_link 'Remove'
+	  find('form .fields input[id$=_destroy]').value.should == '1'
+	  find('form .fields input[id$=name]').should_not be_visible
+
+	  click_link 'Add New Entry'
+	  click_link 'Add New Entry'
+	  fields = all('form .fields')
+	  fields.select { |field| field.visible? }.count.should == 2
+	  fields.reject { |field| field.visible? }.count.should == 1
+  end
 
 	subject { page }
 
@@ -72,18 +91,24 @@ describe "TradePages" do
 			before do	
 				FactoryGirl.create(:entry, trade: trade)
 				visit user_path(user)
-				
+			
 			end
 				it { should have_link("ES")}
 
 				describe "edit a trade" do
-					before { click_link "ES" }
+					before do
+						click_link "ES"
+						check_form
+					end  
+
+
 
 					it { should have_content("Edit Trade")}
 
 					describe "with invalid information" do
 						before do
-							click_link "Add New Entry" 
+							click_link "Add New Entry"
+							
 							click_button "Update"
 						end
 						it { should have_content('error') }

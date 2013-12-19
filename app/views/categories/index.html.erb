@@ -1,5 +1,5 @@
 <%= provide(:title, current_user.name) %>
-<h1>Category list for <%= current_user.name %></h1>
+<h1>Trade Tags List for <%= current_user.name %></h1>
 <div class="row">
 	<aside class="span3">
 		<section>
@@ -8,6 +8,8 @@
 				<%= current_user.name %>
 			</h1>
 			<h2><%= link_to "New Category", new_user_category_path %></h2>
+
+			<p>Click a category name to add tags</p>
 		</section>
 	</aside>
 	<div class="span9">
