@@ -4,7 +4,7 @@
 
 <div class="row">
 	<div class="span6 offset3">
-		<%= form_for @category, url: user_categories_path do |f| %>
+		<%= nested_form_for @category, url: user_categories_path do |f| %>
 
 			<fieldset class="field">
 				<%= render 'cat_fields', f: f %>
@@ -13,7 +13,7 @@
 				<%= f.fields_for :tags do |builder| %>
 					<%= render 'tag_fields' , f: builder %>
 				<% end %>
-				<%= link_to_add_fields "Add Tag", f, :tags %>
+				<%= f.link_to_add "Add Tag", :tags %>
 			
 					
 			<%= f.submit "Save", class: "btn btn-large btn-primary" %>

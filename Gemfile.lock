@@ -107,6 +107,7 @@ GEM
     mini_portile (0.5.2)
     minitest (4.7.5)
     multi_json (1.8.2)
+    nested_form (0.3.2)
     nokogiri (1.6.0)
       mini_portile (~> 0.5.0)
     pg (0.15.1)
@@ -231,6 +232,7 @@ DEPENDENCIES
   jquery-rails (= 3.0.4)
   jquery-validation-rails
   libnotify
+  nested_form
   pg (= 0.15.1)
   pry (~> 0.9.12.4)
   pry-rails

@@ -1,36 +1,37 @@
-<%= form_for @trade do |f| %>
+<%= nested_form_for @trade do |f| %>
+
 <%= render 'shared/error_messages', object: f.object %>
 	
 	<h3>Symbol: <%= @trade.symbol %></h3>
+
   <%= f.label :desc, "Descripton" %>
 	<%= f.text_field :desc, class: "span7" %>
 
 	<%= f.label :comments %>
 	<%= f.text_area :comments, class: "span10" %>
 
-			
-	 
-	 <div class="checkbox">  
-	   <%= f.label :market_condition %>  
-	   <%= f.collection_check_boxes :market_condition, Trade.get_market_condition, :to_s, :to_s do |b| %>
-	   <%= b.label(class: "checkbox inline") {b.check_box + b.text }  %>
-	   <% end %>      
-	 </div>
-	
+	<div class="checkbox">  
+   <%= f.label :market_condition %>  
+   <%= f.collection_check_boxes :market_condition, Trade.get_market_condition, :to_s, :to_s do |b| %>
+   <%= b.label(class: "checkbox inline") {b.check_box + b.text }  %>
+   <% end %>      
+	</div>	
 
-    <div class="row"><div class="span12"><hr/></div></div>
+   <div class="row">
+    	<div class="span12"><hr/></div>
+   </div>
 
-
-		<div id="entries">
-			<h3>Entries</h3>
-			<%= f.fields_for :entries, validate: true do |builder| %>				
+   	<h3>Entries</h3>			
+			<%= f.fields_for :entries do |builder| %>				
 				<%= render 'entry_fields', f: builder %>
 			<% end %>
-		</div>
-		<%= link_to_add_fields "Add New Entry", f, :entries %>
 		
-		<div class="button-group offset2">
-				<%= f.submit "Update", class: "btn btn-large btn-primary" %>
-		</div>
+	<p><%= f.link_to_add "Add New Entry", :entries %></p>
+
+		
+	<div class="button-group offset2">
+		<%= f.submit "Update", class: "btn btn-large btn-primary" %>
+	</div>
+
 			
 <% end %>

@@ -1,4 +1,4 @@
-<fieldset class="form-inline">
+<div class="form-inline">
   <%= f.label :entrytime, "Timestamp" %>  			  	
   <%= f.datetime_local_field :entrytime, value: date_format(f.object.entrytime), class: "span3 control-label" %>
 
@@ -7,8 +7,7 @@
 
 	<%= f.label :price %>
 	<%= f.number_field :price, class: "input-small", step: step(@trade.symbol)%>	
-	<%= f.hidden_field :_destroy %>
-	<% if f.object.persisted? %>
-		<%= link_to "remove", '#', class: "remove_fields" %>
-	<% end %>
-</fieldset>
+	
+	<%= f.link_to_remove "remove", id: "entry" %>
+	
+</div>
