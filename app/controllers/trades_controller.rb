@@ -7,6 +7,7 @@ class TradesController < ApplicationController
 		@trade = current_user.trades.find(params[:id])
 		@entries = @trade.entries
 		@trade.pass = false
+		@categories = current_user.categories.pluck(:name)
 	end
 
 	def update
@@ -122,7 +123,8 @@ class TradesController < ApplicationController
 			params.require(:trade).permit(:fill, :stop, :targ1, :targ2, :prob1, :prob2, :desc, :comments, :symbol, :edge,
 												:security_id, :stop2, :commit, :second_target, :sellpct, :pass, :kelly, :get_spread, :spread,
 												 :market_condition => [],
-												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id, :_destroy] )
+												entries_attributes: [:id, :price, :quantity, :entrytime, :trade_id, :_destroy,
+													:category, :tags => [] ] )
 		end
 
 		

@@ -4,7 +4,7 @@ class Entry < ActiveRecord::Base
 	after_destroy :save_parent
 
 
-	
+	attr_accessor :category
 
 	validates_presence_of :trade
 

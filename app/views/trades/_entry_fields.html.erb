@@ -7,7 +7,15 @@
 
 	<%= f.label :price %>
 	<%= f.number_field :price, class: "input-small", step: step(@trade.symbol)%>	
+
+	<%= f.label :category, "Tags" %>
+	<%= f.collection_select :category, @categories, :to_s, :to_s, {include_blank: true},
+			{ class: "input-small category"} %>
 	
-	<%= f.link_to_remove "remove", id: "entry" %>
 	
+	<%= f.link_to_remove "remove", class: "rentry" %>
+	<div class="offset2">Tags:<%= f.object.tags %> </div>
+
+<%= f.grouped_collection_select :tags, current_user.categories, :tags, :name, :name, :name, {include_blank: true},
+			{ multiple: true , class: "input-large tags offset7"} %>
 </div>

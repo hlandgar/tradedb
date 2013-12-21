@@ -168,6 +168,15 @@
 
     	<%= e.label :price %>
     	<%= e.number_field :price, class: "input-small", value: @price, step: @step, min:0 %>
+
+
+ 			<%= e.label :tags, "Setups (select multiple by holding down CTRL Key)" %>
+ 			<%= e.collection_select :tags, current_user.categories.find_by(name: "Setups").tags.pluck(:name),
+ 						:to_s, :to_s, { include_blank: true }, { :multiple => true , class: "span3" }  %>
+ 		
+
+
+
     	
     <% end %>
 
@@ -183,6 +192,10 @@
 	   <%= b.label(class: "checkbox inline") {b.check_box + b.text }  %>
 	   <% end %>      
  		</div>
+
+ 		
+
+
   </div>
   <div class="modal-footer">
     <button class="btn" data-dismiss="modal"

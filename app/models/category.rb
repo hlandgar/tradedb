@@ -7,4 +7,6 @@ class Category < ActiveRecord::Base
 	validates :user_id, presence: true
 
 	DEFAULTS = %w{ Setups Exits }
+
+	
 end
