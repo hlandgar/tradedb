@@ -13,6 +13,7 @@ gem 'jquery-validation-rails'
 gem "pry", "~> 0.9.12.4"
 gem "pry-rails"
 gem "nested_form"
+gem "jquery-turbolinks"
 
 
 group :development, :test do

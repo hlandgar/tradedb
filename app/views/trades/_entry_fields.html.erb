@@ -10,7 +10,7 @@
 
 	<%= f.label :category, "Tags" %>
 	<%= f.collection_select :category, @categories, :to_s, :to_s, {include_blank: true},
-			{ class: "input-small category"} %>
+			{ class: "input-small"} %>
 	
 	
 	<%= f.link_to_remove "remove", class: "rentry" %>
